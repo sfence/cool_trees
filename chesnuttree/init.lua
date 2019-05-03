@@ -72,7 +72,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 		place_on = {"default:dirt_with_grass"},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.0005,
+			offset = 0.00005,
 			scale = 0.00004,
 			spread = {x = 250, y = 250, z = 250},
 			seed = 2,
@@ -113,7 +113,7 @@ minetest.register_node("chesnuttree:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1,1))
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -205,7 +205,7 @@ minetest.register_lbm({
 	name = "chesnuttree:convert_chesnuttree_saplings_to_node_timer",
 	nodenames = {"chesnuttree:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
