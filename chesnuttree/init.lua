@@ -9,7 +9,6 @@ local mg_name = minetest.get_mapgen_setting("mg_name")
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
-
 --Chesnut Bur
 
 minetest.register_node("chesnuttree:bur", {
@@ -60,7 +59,7 @@ local function grow_new_chesnuttree_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x-2, y = pos.y, z = pos.z-2}, modpath.."/schematics/chesnuttree.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x-6, y = pos.y, z = pos.z-6}, modpath.."/schematics/chesnuttree.mts", "0", nil, true)
 end
 
 --
@@ -80,12 +79,13 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"grassland"},
 		y_min = 1,
 		y_max = 80,
 		schematic = modpath.."/schematics/chesnuttree.mts",
 		flags = "place_center_x, place_center_z,  force_placement",
 		rotation = "random",
+		place_offset_y = 1,
 	})
 end
 
@@ -113,7 +113,7 @@ minetest.register_node("chesnuttree:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(2400,4800))
+		minetest.get_node_timer(pos):start(math.random(1,1))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -205,7 +205,7 @@ minetest.register_lbm({
 	name = "chesnuttree:convert_chesnuttree_saplings_to_node_timer",
 	nodenames = {"chesnuttree:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
+		minetest.get_node_timer(pos):start(math.random(1, 1))
 	end
 })
 
