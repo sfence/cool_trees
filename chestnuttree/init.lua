@@ -1,8 +1,8 @@
 --
--- Chesnuttree
+-- Chestnuttree
 --
 
-local modname = "chesnuttree"
+local modname = "chestnuttree"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
@@ -11,11 +11,11 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 --Chesnut Bur
 
-minetest.register_node("chesnuttree:bur", {
-	description = S("Chesnut Bur"),
+minetest.register_node("chestnuttree:bur", {
+	description = S("Chestnut Bur"),
 	drawtype = "plantlike",
-	tiles = {"chesnuttree_bur.png"},
-	inventory_image = "chesnuttree_bur.png",
+	tiles = {"chestnuttree_bur.png"},
+	inventory_image = "chestnuttree_bur.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -30,36 +30,36 @@ minetest.register_node("chesnuttree:bur", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "chesnuttree:bur", param2 = 1})
+		minetest.set_node(pos, {name = "chestnuttree:bur", param2 = 1})
 	end,
 })
 
 --Chesnut Fruit
 
-minetest.register_craftitem("chesnuttree:fruit", {
-	description = S("Chesnut"),
-	inventory_image = "chesnuttree_fruit.png",	
+minetest.register_craftitem("chestnuttree:fruit", {
+	description = S("Chestnut"),
+	inventory_image = "chestnuttree_fruit.png",	
 	on_use = minetest.item_eat(2),
 	groups = {flammable = 2, food = 2},
 })
 
 minetest.register_craft({
-	output = "chesnuttree:fruit",
+	output = "chestnuttree:fruit",
 	recipe = {
-		{'chesnuttree:bur'}
+		{'chestnuttree:bur'}
 	}
 })
 
--- chesnuttree
+-- chestnuttree
 
-local function grow_new_chesnuttree_tree(pos)
+local function grow_new_chestnuttree_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
 
-	minetest.place_schematic({x = pos.x-6, y = pos.y, z = pos.z-6}, modpath.."/schematics/chesnuttree.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x-6, y = pos.y, z = pos.z-6}, modpath.."/schematics/chestnuttree.mts", "0", nil, true)
 end
 
 --
@@ -82,7 +82,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 		biomes = {"grassland"},
 		y_min = 1,
 		y_max = 80,
-		schematic = modpath.."/schematics/chesnuttree.mts",
+		schematic = modpath.."/schematics/chestnuttree.mts",
 		flags = "place_center_x, place_center_z,  force_placement",
 		rotation = "random",
 		place_offset_y = 1,
@@ -93,17 +93,17 @@ end
 -- Nodes
 --
 
-minetest.register_node("chesnuttree:sapling", {
-	description = S("Chesnut Tree Sapling"),
+minetest.register_node("chestnuttree:sapling", {
+	description = S("Chestnut Tree Sapling"),
 	drawtype = "plantlike",
 	visual_scale = 1.0,
-	tiles = {"chesnuttree_sapling.png"},
-	inventory_image = "chesnuttree_sapling.png",
-	wield_image = "chesnuttree_sapling.png",
+	tiles = {"chestnuttree_sapling.png"},
+	inventory_image = "chestnuttree_sapling.png",
+	wield_image = "chestnuttree_sapling.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
-	on_timer = grow_new_chesnuttree_tree,
+	on_timer = grow_new_chestnuttree_tree,
 	selection_box = {
 		type = "fixed",
 		fixed = {-4 / 16, -0.5, -4 / 16, 4 / 16, 7 / 16, 4 / 16}
@@ -118,7 +118,7 @@ minetest.register_node("chesnuttree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"chesnuttree:sapling",
+			"chestnuttree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -130,12 +130,12 @@ minetest.register_node("chesnuttree:sapling", {
 	end,
 })
 
-minetest.register_node("chesnuttree:trunk", {
-	description = S("Chesnut Tree Trunk"),
+minetest.register_node("chestnuttree:trunk", {
+	description = S("Chestnut Tree Trunk"),
 	tiles = {
-		"chesnuttree_trunk_top.png",
-		"chesnuttree_trunk_top.png",
-		"chesnuttree_trunk.png"
+		"chestnuttree_trunk_top.png",
+		"chestnuttree_trunk_top.png",
+		"chestnuttree_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
@@ -143,23 +143,23 @@ minetest.register_node("chesnuttree:trunk", {
 	on_place = minetest.rotate_node,
 })
 
--- chesnuttree wood
-minetest.register_node("chesnuttree:wood", {
-	description = S("Chesnut Tree Wood"),
-	tiles = {"chesnuttree_wood.png"},
+-- chestnuttree wood
+minetest.register_node("chestnuttree:wood", {
+	description = S("Chestnut Tree Wood"),
+	tiles = {"chestnuttree_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
 })
 
--- chesnuttree tree leaves
-minetest.register_node("chesnuttree:leaves", {
-	description = S("Chesnut Tree Leaves"),
+-- chestnuttree tree leaves
+minetest.register_node("chestnuttree:leaves", {
+	description = S("Chestnut Tree Leaves"),
 	drawtype = "allfaces_optional",
 	visual_scale = 1.2,
-	tiles = {"chesnuttree_leaves.png"},
-	inventory_image = "chesnuttree_leaves.png",
-	wield_image = "chesnuttree_leaves.png",
+	tiles = {"chestnuttree_leaves.png"},
+	inventory_image = "chestnuttree_leaves.png",
+	wield_image = "chestnuttree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -167,8 +167,8 @@ minetest.register_node("chesnuttree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"chesnuttree:sapling"}, rarity = 20},
-			{items = {"chesnuttree:leaves"}}
+			{items = {"chestnuttree:sapling"}, rarity = 20},
+			{items = {"chestnuttree:leaves"}}
 		}
 	},
 	sounds = default.node_sound_leaves_defaults(),
@@ -184,34 +184,34 @@ minetest.register_node("chesnuttree:leaves", {
 --
 
 minetest.register_craft({
-	output = "chesnuttree:wood 4",
-	recipe = {{"chesnuttree:trunk"}}
+	output = "chestnuttree:wood 4",
+	recipe = {{"chestnuttree:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "chesnuttree:trunk",
+	recipe = "chestnuttree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "chesnuttree:wood",
+	recipe = "chestnuttree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "chesnuttree:convert_chesnuttree_saplings_to_node_timer",
-	nodenames = {"chesnuttree:sapling"},
+	name = "chestnuttree:convert_chestnuttree_saplings_to_node_timer",
+	nodenames = {"chestnuttree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
 default.register_leafdecay({
-	trunks = {"chesnuttree:trunk"},
-	leaves = {"chesnuttree:leaves"},
+	trunks = {"chestnuttree:trunk"},
+	leaves = {"chestnuttree:leaves"},
 	radius = 3,
 })
 
@@ -219,12 +219,12 @@ default.register_leafdecay({
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
-		"chesnuttree_trunk",
-		"chesnuttree:trunk",
+		"chestnuttree_trunk",
+		"chestnuttree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-		{"chesnuttree_wood.png"},
-		S("Chesnut Tree Stair"),
-		S("Chesnut Tree Slab"),
+		{"chestnuttree_wood.png"},
+		S("Chestnut Tree Stair"),
+		S("Chestnut Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
 end
