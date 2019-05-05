@@ -175,9 +175,9 @@ minetest.register_node("palm:sapling", {
 	description = S("Palm Sapling"),
 	drawtype = "plantlike",
 	visual_scale = 1.0,
-	tiles = {"moretrees_palm_sapling.png"},
-	inventory_image = "moretrees_palm_sapling.png",
-	wield_image = "moretrees_palm_sapling.png",
+	tiles = {"palm_sapling.png"},
+	inventory_image = "palm_sapling.png",
+	wield_image = "palm_sapling.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -212,9 +212,9 @@ minetest.register_node("palm:sapling", {
 minetest.register_node("palm:trunk", {
 	description = S("Palm Trunk"),
 	tiles = {
-		"moretrees_palm_trunk_top.png",
-		"moretrees_palm_trunk_top.png",
-		"moretrees_palm_trunk.png"
+		"palm_trunk_top.png",
+		"palm_trunk_top.png",
+		"palm_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
@@ -225,7 +225,7 @@ minetest.register_node("palm:trunk", {
 -- palm wood
 minetest.register_node("palm:wood", {
 	description = S("Palm Wood"),
-	tiles = {"moretrees_palm_wood.png"},
+	tiles = {"palm_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
@@ -237,9 +237,9 @@ minetest.register_node("palm:leaves", {
 	description = S("Palm Leaves"),
 	drawtype = "allfaces_optional",
 	visual_scale = 1.2,
-	tiles = {"moretrees_palm_leaves.png"},
-	inventory_image = "moretrees_palm_leaves.png",
-	wield_image = "moretrees_palm_leaves.png",
+	tiles = {"palm_leaves.png"},
+	inventory_image = "palm_leaves.png",
+	wield_image = "palm_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -258,13 +258,13 @@ minetest.register_node("palm:leaves", {
 -- Coconut (Gives 4 coconut slices, each heal 1/2 heart)
 minetest.register_node("palm:coconut", {
 	description = S("Coconut"),
-	drawtype = "plantlike",
+	drawtype = "normal",
 	walkable = false,
 	paramtype = "light",
 	sunlight_propagates = true,
-	tiles = {"moretrees_coconut.png"},
-	inventory_image = "moretrees_coconut.png",
-	wield_image = "moretrees_coconut.png",
+	tiles = {"palm_coconut_top.png", "palm_coconut_side.png"},
+	--inventory_image = "palm_coconut_side.png",
+	--wield_image = "palm_coconut_side.png",
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.31, -0.43, -0.31, 0.31, 0.44, 0.31}
@@ -281,11 +281,11 @@ minetest.register_node("palm:coconut", {
 minetest.register_node("palm:candle", {
 	description = S("Coconut Wax Candle"),
 	drawtype = "plantlike",
-	inventory_image = "candle_static.png",
-	wield_image = "candle_static.png",
+	inventory_image = "palm_candle_static.png",
+	wield_image = "palm_candle_static.png",
 	tiles = {
 		{
-			name = "candle.png",
+			name = "palm_candle.png",
 			animation={
 				type="vertical_frames",
 				aspect_w = 32,
@@ -327,8 +327,8 @@ end
 -- Coconut Slice (Heals half heart when eaten)
 minetest.register_craftitem("palm:coconut_slice", {
 	description = S("Coconut Slice"),
-	inventory_image = "moretrees_coconut_slice.png",
-	wield_image = "moretrees_coconut_slice.png",
+	inventory_image = "palm_coconut_slice.png",
+	wield_image = "palm_coconut_slice.png",
 	on_use = minetest.item_eat(1),
 })
 
