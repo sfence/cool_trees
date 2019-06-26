@@ -531,7 +531,7 @@ schematic = {
 		{name="air", prob=0, param2=0},
 		{name="air", prob=0, param2=0},
 		{name="air", prob=0, param2=0},
-		{name="default:grass_1", prob=254, param2=0},
+		{name="air", prob=0, param2=0},
 		{name="air", prob=0, param2=0},
 		{name="air", prob=0, param2=0},
 		{name="air", prob=0, param2=0},
