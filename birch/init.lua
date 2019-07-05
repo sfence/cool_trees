@@ -3,9 +3,6 @@
 -- Birch Tree
 --
 
--- Thanks to VanessaE, Tenplus1, paramat and all others who
--- contribute to this mod
-
 local modname = "birch"
 local modpath = minetest.get_modpath(modname)
 
@@ -20,7 +17,7 @@ birch = {}
 local ai = {name = "air", param1 = 000}
 local tr = {name = "birch:trunk", param1 = 255, force_place = true}
 local lp = {name = "birch:leaves", param1 = 255}
-local lr = {name = "birch:leaves", param1 = 150}
+local lr = {name = "birch:leaves", param1 = 255}
 
 birch.birchtree = {
 
@@ -83,8 +80,7 @@ local function grow_new_birch_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x - 2, y = pos.y - 1, z = pos.z - 2},
-		birch.birchtree, "0", nil, false)
+	minetest.place_schematic({x = pos.x - 2, y = pos.y - 1, z = pos.z - 2}, birch.birchtree, "0", nil, true)
 end
 
 --
@@ -152,7 +148,7 @@ minetest.register_node("birch:sapling", {
 	end,
 })
 
--- birch trunk (thanks to VanessaE for birch textures)
+-- birch trunk
 minetest.register_node("birch:trunk", {
 	description = S("Birch Trunk"),
 	tiles = {
@@ -164,6 +160,10 @@ minetest.register_node("birch:trunk", {
 	sounds = default.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
+	is_ground_content = false,
+	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+		minetest.item_place_node(itemstack, player, pointed_thing, nil)
+	end
 })
 
 -- birch wood
