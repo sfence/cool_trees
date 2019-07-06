@@ -124,10 +124,10 @@ minetest.register_decoration({
 	noise_params = {
 		offset = 0.005,
 		scale = 0.001,
-		spread = {x = 250, y = 250, z = 250},
+		spread = {x = 240, y = 240, z = 240},
 		seed = 2776,
 		octaves = 3,
-		persist = 0.66
+		persist = 0.65
 	},
 	biomes = {"grassland"},
 	y_min = 2,
