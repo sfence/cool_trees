@@ -2,8 +2,6 @@
 -- Palm Tree
 --
 
--- Thanks to VanessaE, Tenplus1, paramat and all others who
--- contribute to this mod
 local modname = "palm"
 local modpath = minetest.get_modpath(modname)
 
@@ -416,4 +414,11 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Palm Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
+end
+
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"palm:sapling", grow_new_palm_tree, "soil"},
+		{"palm:sapling", grow_new_palm_tree, "sand"},
+	})
 end

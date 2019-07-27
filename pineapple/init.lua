@@ -126,3 +126,9 @@ minetest.register_lbm({
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
+
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"pineapple:sapling", grow_new_pineapple_tree, "soil"},
+	})
+end

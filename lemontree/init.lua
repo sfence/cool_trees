@@ -218,8 +218,13 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("cork") ~= nil then
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"lemontree:sapling", grow_new_lemontree_tree, "soil"},
+	})
+end
 
+if minetest.get_modpath("cork") ~= nil then
 	minetest.register_node("lemontree:trunk_nobark", {
 		description = S("Lemon Tree Trunk"),
 		tiles = {
@@ -244,5 +249,4 @@ if minetest.get_modpath("cork") ~= nil then
 		recipe = "lemontree:trunk_nobark",
 		burntime = 25,
 	})
-
 end

@@ -251,3 +251,9 @@ if minetest.get_modpath("stairs") ~= nil then
 		default.node_sound_wood_defaults()
 	)
 end
+
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"birch:sapling", grow_new_birch_tree, "soil"},
+	})
+end

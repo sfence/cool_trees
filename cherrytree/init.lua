@@ -258,3 +258,11 @@ minetest.register_abm({
         end
     end
 })
+
+--Support for bonemeal
+
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"cherrytree:sapling", grow_new_cherrytree_tree, "soil"},
+	})
+end

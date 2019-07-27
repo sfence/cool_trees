@@ -215,3 +215,9 @@ default.register_leafdecay({
 	leaves = {"bamboo:leaves"},
 	radius = 3,
 })
+
+if minetest.get_modpath("bonemeal") ~= nil then	
+	bonemeal:add_sapling({
+		{"bamboo:sprout", grow_new_bamboo, "soil"},
+	})
+end
