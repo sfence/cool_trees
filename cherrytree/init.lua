@@ -157,7 +157,7 @@ minetest.register_node("cherrytree:blossom_leaves", {
 		max_items = 1,
 		items = {
 			{items = {"cherrytree:sapling"}, rarity = 20},
-			{items = {"cherrytree:leaves"}}
+			{items = {"cherrytree:blossom_leaves"}}
 		}
 	},
 	sounds = default.node_sound_leaves_defaults(),
