@@ -403,3 +403,17 @@ default.register_leafdecay({
 	leaves = {"palm:leaves", "palm:coconut"},
 	radius = 3,
 })
+
+--Stairs
+
+if minetest.get_modpath("stairs") ~= nil then	
+	stairs.register_stair_and_slab(
+		"palm_trunk",
+		"palm:trunk",
+		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		{"palm_wood.png"},
+		S("Palm Tree Stair"),
+		S("Palm Tree Slab"),
+		default.node_sound_wood_defaults()
+	)
+end

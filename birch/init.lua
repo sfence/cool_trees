@@ -115,9 +115,9 @@ minetest.register_node("birch:sapling", {
 	description = S("Birch Sapling"),
 	drawtype = "plantlike",
 	visual_scale = 1.0,
-	tiles = {"moretrees_birch_sapling.png"},
-	inventory_image = "moretrees_birch_sapling.png",
-	wield_image = "moretrees_birch_sapling.png",
+	tiles = {"birch_sapling.png"},
+	inventory_image = "birch_sapling.png",
+	wield_image = "birch_sapling.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
@@ -152,9 +152,9 @@ minetest.register_node("birch:sapling", {
 minetest.register_node("birch:trunk", {
 	description = S("Birch Trunk"),
 	tiles = {
-		"moretrees_birch_trunk_top.png",
-		"moretrees_birch_trunk_top.png",
-		"moretrees_birch_trunk.png"
+		"birch_trunk_top.png",
+		"birch_trunk_top.png",
+		"birch_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
@@ -169,7 +169,7 @@ minetest.register_node("birch:trunk", {
 -- birch wood
 minetest.register_node("birch:wood", {
 	description = S("Birch Wood"),
-	tiles = {"moretrees_birch_wood.png"},
+	tiles = {"birch_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
@@ -180,9 +180,9 @@ minetest.register_node("birch:leaves", {
 	description = S("Birch Leaves"),
 	drawtype = "allfaces_optional",
 	visual_scale = 1.2,
-	tiles = {"moretrees_birch_leaves.png"},
-	inventory_image = "moretrees_birch_leaves.png",
-	wield_image = "moretrees_birch_leaves.png",
+	tiles = {"birch_leaves.png"},
+	inventory_image = "birch_leaves.png",
+	wield_image = "birch_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -237,3 +237,17 @@ default.register_leafdecay({
 	leaves = {"birch:leaves"},
 	radius = 3,
 })
+
+--Stairs
+
+if minetest.get_modpath("stairs") ~= nil then	
+	stairs.register_stair_and_slab(
+		"birch_trunk",
+		"birch:trunk",
+		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		{"birch_wood.png"},
+		S("Birch Tree Stair"),
+		S("Birch Tree Slab"),
+		default.node_sound_wood_defaults()
+	)
+end
