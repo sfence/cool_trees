@@ -6,7 +6,6 @@
 -- contribute to this mod
 
 local modname = "bamboo"
-local modpath = minetest.get_modpath(modname)
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
@@ -163,6 +162,17 @@ minetest.register_node("bamboo:trunk", {
 
 })
 
+-- bamboo wood
+minetest.register_node("bamboo:wood", {
+	description = S("Bamboo Wood"),
+	tiles = {"bamboo_floor.png"},
+	paramtype2 = "facedir",
+	place_param2 = 0,
+	is_ground_content = false,
+	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+	sounds = default.node_sound_wood_defaults(),
+})
+
 -- bamboo stalk leaves
 minetest.register_node("bamboo:leaves", {
 	description = S("Bamboo Leaves"),
@@ -210,13 +220,19 @@ minetest.register_node("bamboo:sprout", {
 	grown_height = 11,
 })
 
+-- crafts
+minetest.register_craft({
+	output = "bamboo:wood 4",
+	recipe = {{"bamboo:trunk"}}
+})
+
 default.register_leafdecay({
 	trunks = {"bamboo:trunk"},
 	leaves = {"bamboo:leaves"},
 	radius = 3,
 })
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"bamboo:sprout", grow_new_bamboo, "soil"},
 	})

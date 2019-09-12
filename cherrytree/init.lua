@@ -251,7 +251,7 @@ minetest.register_abm({
     action = function(pos, node, active_object_count, active_object_count_wider)		
 		if node.param2 == 1 then -- ignore manually placed leaves
 			return
-		else
+		end
 		math.randomseed(os.time())
 		local is_fruit = math.random(10)
 		if is_fruit == 10  then
@@ -264,7 +264,7 @@ minetest.register_abm({
 
 --Support for bonemeal
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"cherrytree:sapling", grow_new_cherrytree_tree, "soil"},
 	})
