@@ -248,8 +248,11 @@ minetest.register_abm({
     neighbors = {},
     interval = 600.0, -- Run every 10 minuts
     chance = 50, -- Select every 1 in 50 nodes
-    action = function(pos, node, active_object_count, active_object_count_wider)
-    	math.randomseed(os.time())
+    action = function(pos, node, active_object_count, active_object_count_wider)		
+		if node.param2 == 1 then -- ignore manually placed leaves
+			return
+		else
+		math.randomseed(os.time())
 		local is_fruit = math.random(10)
 		if is_fruit == 10  then
 			minetest.set_node(pos, {name = "cherrytree:cherries"})
