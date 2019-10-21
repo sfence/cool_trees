@@ -101,7 +101,7 @@ bamboo.bambootree = {
 }
 
 
-local function grow_new_bamboo(pos)
+local function grow_new_bambootree_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
 		minetest.get_node_timer(pos):start(math.random(240, 600))
@@ -218,6 +218,10 @@ minetest.register_node("bamboo:sprout", {
 	},
 	on_use = minetest.item_eat(2),
 	grown_height = 11,
+	on_timer = grow_new_bambootree_tree,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 })
 
 -- crafts
@@ -232,10 +236,32 @@ default.register_leafdecay({
 	radius = 3,
 })
 
+minetest.register_lbm({
+	name = "bamboo:convert_bambootree_sprouts_to_node_timer",
+	nodenames = {"bamboo:sprout"},
+	action = function(pos)
+		minetest.get_node_timer(pos):start(math.random(1200, 2400))
+	end
+})
+
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"bamboo:sprout", grow_new_bamboo, "soil"},
+		{"bamboo:sprout", grow_new_bambootree_tree, "soil"},
 	})
+end
+
+--Stairs
+
+if minetest.get_modpath("stairs") ~= nil then	
+	stairs.register_stair_and_slab(
+		"bamboo_trunk",
+		"bamboo:trunk",
+		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		{"bamboo_floor.png"},
+		S("Bamboo Stair"),
+		S("Bamboo Slab"),
+		default.node_sound_wood_defaults()
+	)
 end
 
 -- stairsplus/moreblocks

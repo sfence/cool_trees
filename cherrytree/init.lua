@@ -126,7 +126,7 @@ minetest.register_node("cherrytree:trunk", {
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-		minetest.item_place_node(itemstack, player, pointed_thing, nil)
+		--minetest.item_place_node(itemstack, player, pointed_thing, nil)
 	end
 })
 
