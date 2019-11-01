@@ -18,7 +18,7 @@ local function grow_new_ebony_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x-5, y = pos.y, z = pos.z-5}, modpath.."/schematics/ebony.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x-5, y = pos.y, z = pos.z-5}, modpath.."/schematics/ebony.mts", "0", nil, false)
 end
 
 --

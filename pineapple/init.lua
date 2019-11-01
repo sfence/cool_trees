@@ -18,7 +18,7 @@ local function grow_new_pineapple_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x, y = pos.y, z = pos.z}, modpath.."/schematics/pineapple.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x, y = pos.y, z = pos.z}, modpath.."/schematics/pineapple.mts", "0", nil, false)
 end
 
 --

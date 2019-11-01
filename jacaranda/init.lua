@@ -17,7 +17,7 @@ local function grow_new_jacaranda_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x-3, y = pos.y, z = pos.z-3}, modpath.."/schematics/jacaranda.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x-3, y = pos.y, z = pos.z-3}, modpath.."/schematics/jacaranda.mts", "0", nil, false)
 end
 
 --

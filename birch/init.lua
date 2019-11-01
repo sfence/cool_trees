@@ -80,7 +80,7 @@ local function grow_new_birch_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x - 2, y = pos.y - 1, z = pos.z - 2}, birch.birchtree, "0", nil, true)
+	minetest.place_schematic({x = pos.x - 2, y = pos.y - 1, z = pos.z - 2}, birch.birchtree, "0", nil, false)
 end
 
 --

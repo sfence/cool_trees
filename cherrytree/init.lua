@@ -43,7 +43,7 @@ local function grow_new_cherrytree_tree(pos)
 		return
 	end
 
-	minetest.place_schematic({x = pos.x-2, y = pos.y, z = pos.z-2}, modpath.."/schematics/cherrytree.mts", "0", nil, true)
+	minetest.place_schematic({x = pos.x-2, y = pos.y, z = pos.z-2}, modpath.."/schematics/cherrytree.mts", "0", nil, false)
 end
 
 --
