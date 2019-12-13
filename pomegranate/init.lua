@@ -61,7 +61,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"savanna"},
 		y_min = 1,
 		y_max = 80,
 		schematic = modpath.."/schematics/pomegranate.mts",
