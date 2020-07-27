@@ -156,7 +156,7 @@ minetest.register_node("baldcypress:dry_branches", {
 minetest.register_node("baldcypress:liana", {
 	description = S("Bald Cypress Liana"),
 	drawtype = "nodebox",
-	walkable = true,
+	walkable = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"baldcypress_liana.png"},
@@ -165,7 +165,7 @@ minetest.register_node("baldcypress:liana", {
 	is_ground_content = false,
 	node_box = {
 		type = "fixed",
-		fixed = {-0.5, -0.5, 0.0, 0.5, 0.5, 0.0}
+		fixed = {-0.25, -0.5, 0.0, 0.25, 0.5, 0.0}
 	},
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1,
