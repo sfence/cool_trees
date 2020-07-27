@@ -13,7 +13,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local function grow_new_baldcypress_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
-		minetest.get_node_timer(pos):start(math.random(240, 600))
+		minetest.get_node_timer(pos):start(math.random(1, 1))
 		return
 	end
 	minetest.remove_node(pos)
@@ -70,7 +70,7 @@ minetest.register_node("baldcypress:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(2400,4800))
+		minetest.get_node_timer(pos):start(math.random(1,1))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -134,6 +134,45 @@ minetest.register_node("baldcypress:leaves", {
 	after_place_node = default.after_place_leaves,
 })
 
+minetest.register_node("baldcypress:dry_branches", {
+	description = S("Bald Cypress Dry Branches"),
+	drawtype = "nodebox",
+	walkable = true,
+	paramtype = "light",
+	paramtype2 = "facedir",
+	tiles = {"baldcypress_dry_branches.png"},
+	inventory_image = "baldcypress_dry_branches.png",
+	wield_image = "baldcypress_dry_branches.png",
+	node_box = {
+		type = "fixed",
+		fixed = {-0.5, -0.5, 0.49, 0.5, 0.5, 0.5}
+	},
+	groups = {
+		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1
+	},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
+minetest.register_node("baldcypress:liana", {
+	description = S("Bald Cypress Liana"),
+	drawtype = "nodebox",
+	walkable = true,
+	paramtype = "light",
+	paramtype2 = "facedir",
+	tiles = {"baldcypress_liana.png"},
+	inventory_image = "baldcypress_liana.png",
+	wield_image = "baldcypress_liana.png",
+	is_ground_content = false,
+	node_box = {
+		type = "fixed",
+		fixed = {-0.5, -0.5, 0.0, 0.5, 0.5, 0.0}
+	},
+	groups = {
+		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1,
+	},
+	sounds = default.node_sound_leaves_defaults(),
+})
+
 --
 -- Craftitems
 --
@@ -165,7 +204,7 @@ minetest.register_lbm({
 	name = "baldcypress:convert_baldcypress_saplings_to_node_timer",
 	nodenames = {"baldcypress:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
+		minetest.get_node_timer(pos):start(math.random(1, 1))
 	end
 })
 
