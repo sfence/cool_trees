@@ -13,7 +13,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 local function grow_new_baldcypress_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
 	minetest.remove_node(pos)
@@ -70,7 +70,7 @@ minetest.register_node("baldcypress:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1,1))
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -204,7 +204,7 @@ minetest.register_lbm({
 	name = "baldcypress:convert_baldcypress_saplings_to_node_timer",
 	nodenames = {"baldcypress:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
