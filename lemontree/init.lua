@@ -5,7 +5,7 @@
 local modname = "lemontree"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
-local fruit_grow_time = 5
+local fruit_grow_time = 1200
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
