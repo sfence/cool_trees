@@ -4,6 +4,7 @@
 local modname = "cherrytree"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
+local fruit_grow_time = 1200
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
@@ -31,8 +32,22 @@ minetest.register_node("cherrytree:cherries", {
 	after_place_node = function(pos, placer, itemstack)
 		minetest.set_node(pos, {name = "cherrytree:cherries", param2 = 1})
 	end,
-})
 
+	on_dig = function(pos, node, digger)
+		if digger:is_player() then
+			local inv = digger:get_inventory()
+			if inv:room_for_item("main", "cherrytree:cherries") then
+				inv:add_item("main", "cherrytree:cherries")
+			end
+		end
+		minetest.remove_node(pos)
+		pos.y = pos.y + 1
+		local node_above = minetest.get_node_or_nil(pos)
+		if node_above and node_above.param2 == 0 and node_above.name == "cherrytree:blossom_leaves" then
+			minetest.get_node_timer(pos):start(fruit_grow_time)
+		end
+	end,
+})
 
 -- Cherrytree
 
@@ -157,6 +172,8 @@ minetest.register_node("cherrytree:blossom_leaves", {
 	},
 	sounds = default.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
+
+decay
 })
 
 -- cherrytree tree leaves
@@ -235,26 +252,6 @@ if minetest.get_modpath("stairs") ~= nil then
 		default.node_sound_wood_defaults()
 	)
 end
-
--- Chance to convert to normal leaves and cherry fruits
-minetest.register_abm({
-    nodenames = {"cherrytree:blossom_leaves"},
-    neighbors = {},
-    interval = 600.0, -- Run every 10 minuts
-    chance = 50, -- Select every 1 in 50 nodes
-    action = function(pos, node, active_object_count, active_object_count_wider)
-		if node.param2 == 1 then -- ignore manually placed leaves
-			return
-		end
-		math.randomseed(os.time())
-		local is_fruit = math.random(10)
-		if is_fruit == 10  then
-			minetest.set_node(pos, {name = "cherrytree:cherries"})
-		else
-        	minetest.set_node(pos, {name = "cherrytree:leaves"})
-        end
-    end
-})
 
 --Support for bonemeal
 

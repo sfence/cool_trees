@@ -117,7 +117,6 @@ minetest.register_node("maple:leaves", {
 	description = S("Maple Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"maple_leaves.png"},
-	--inventory_image = "maple_leaves.png",
 	wield_image = "maple_leaves.png",
 	paramtype = "light",
 	walkable = true,
