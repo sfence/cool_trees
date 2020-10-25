@@ -1,24 +1,23 @@
 --
--- Maple
+-- Hollytree
 --
-
-local modname = "maple"
+local modname = "hollytree"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
--- Maple
+-- Hollytree
 
-local function grow_new_maple_tree(pos)
+local function grow_new_hollytree_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
 	minetest.remove_node(pos)
-	minetest.place_schematic({x = pos.x-3, y = pos.y-1, z = pos.z-3}, modpath.."/schematics/maple.mts", "0", nil, false)
+	minetest.place_schematic({x = pos.x-4, y = pos.y, z = pos.z-4}, modpath.."/schematics/hollytree.mts", "0", nil, false)
 end
 
 --
@@ -31,17 +30,17 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 		place_on = {"rainf:meadow"},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.0005,
-			scale = 0.0002,
+			offset = 0.0008,
+			scale = 0.00005,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 3462,
+			seed = 789,
 			octaves = 3,
 			persist = 0.66
 		},
 		biomes = {"rainf"},
 		y_min = 1,
-		y_max = 62,
-		schematic = modpath.."/schematics/maple.mts",
+		y_max = 32,
+		schematic = modpath.."/schematics/hollytree.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
 	})
@@ -51,16 +50,17 @@ end
 -- Nodes
 --
 
-minetest.register_node("maple:sapling", {
-	description = S("Maple Tree Sapling"),
+minetest.register_node("hollytree:sapling", {
+	description = S("Holly Tree Sapling"),
 	drawtype = "plantlike",
-	tiles = {"maple_sapling.png"},
-	inventory_image = "maple_sapling.png",
-	wield_image = "maple_sapling.png",
+	visual_scale = 1.0,
+	tiles = {"hollytree_sapling.png"},
+	inventory_image = "hollytree_sapling.png",
+	wield_image = "hollytree_sapling.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
-	on_timer = grow_new_maple_tree,
+	on_timer = grow_new_hollytree_tree,
 	selection_box = {
 		type = "fixed",
 		fixed = {-4 / 16, -0.5, -4 / 16, 4 / 16, 7 / 16, 4 / 16}
@@ -75,7 +75,7 @@ minetest.register_node("maple:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"maple:sapling",
+			"hollytree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -87,12 +87,12 @@ minetest.register_node("maple:sapling", {
 	end,
 })
 
-minetest.register_node("maple:trunk", {
-	description = S("Maple Trunk"),
+minetest.register_node("hollytree:trunk", {
+	description = S("Holly Tree Trunk"),
 	tiles = {
-		"maple_trunk_top.png",
-		"maple_trunk_top.png",
-		"maple_trunk.png"
+		"hollytree_trunk_top.png",
+		"hollytree_trunk_top.png",
+		"hollytree_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
@@ -101,10 +101,10 @@ minetest.register_node("maple:trunk", {
 	on_place = minetest.rotate_node,
 })
 
--- maple wood
-minetest.register_node("maple:wood", {
-	description = S("Maple Wood"),
-	tiles = {"maple_wood.png"},
+-- hollytree wood
+minetest.register_node("hollytree:wood", {
+	description = S("Holly Tree Wood"),
+	tiles = {"hollytree_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
@@ -112,12 +112,13 @@ minetest.register_node("maple:wood", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
--- maple tree leaves
-minetest.register_node("maple:leaves", {
-	description = S("Maple Leaves"),
+-- hollytree tree leaves
+minetest.register_node("hollytree:leaves", {
+	description = S("Holly Tree Leaves"),
 	drawtype = "allfaces_optional",
-	tiles = {"maple_leaves.png"},
-	wield_image = "maple_leaves.png",
+	tiles = {"hollytree_leaves.png"},
+	inventory_image = "hollytree_leaves.png",
+	wield_image = "hollytree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -125,8 +126,8 @@ minetest.register_node("maple:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"maple:sapling"}, rarity = 20},
-			{items = {"maple:leaves"}}
+			{items = {"hollytree:sapling"}, rarity = 20},
+			{items = {"hollytree:leaves"}}
 		}
 	},
 	sounds = default.node_sound_leaves_defaults(),
@@ -142,34 +143,35 @@ minetest.register_node("maple:leaves", {
 --
 
 minetest.register_craft({
-	output = "maple:wood 4",
-	recipe = {{"maple:trunk"}}
+	output = "hollytree:wood 4",
+	recipe = {{"hollytree:trunk"}}
 })
+
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:trunk",
+	recipe = "hollytree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:wood",
+	recipe = "hollytree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "maple:convert_maple_saplings_to_node_timer",
-	nodenames = {"maple:sapling"},
+	name = "hollytree:convert_hollytree_saplings_to_node_timer",
+	nodenames = {"hollytree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
 default.register_leafdecay({
-	trunks = {"maple:trunk"},
-	leaves = {"maple:leaves"},
+	trunks = {"hollytree:trunk"},
+	leaves = {"hollytree:leaves"},
 	radius = 3,
 })
 
@@ -177,18 +179,20 @@ default.register_leafdecay({
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
-		"maple_trunk",
-		"maple:trunk",
+		"hollytree_trunk",
+		"hollytree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-		{"maple_wood.png"},
-		S("Maple Stair"),
-		S("Maple Slab"),
+		{"hollytree_wood.png"},
+		S("Cherry Tree Stair"),
+		S("Cherry Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
 end
 
+--Support for bonemeal
+
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"maple:sapling", grow_new_maple_tree, "soil"},
+		{"hollytree:sapling", grow_new_hollytree_tree, "soil"},
 	})
 end

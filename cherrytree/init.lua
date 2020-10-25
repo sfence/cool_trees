@@ -44,7 +44,10 @@ minetest.register_node("cherrytree:cherries", {
 		pos.y = pos.y + 1
 		local node_above = minetest.get_node_or_nil(pos)
 		if node_above and node_above.param2 == 0 and node_above.name == "cherrytree:blossom_leaves" then
-			minetest.get_node_timer(pos):start(fruit_grow_time)
+			--20% of variation on time
+			local twenty_percent = fruit_grow_time * 0.2
+			local grow_time = math.random(fruit_grow_time - twenty_percent, fruit_grow_time + twenty_percent)
+			minetest.get_node_timer(pos):start(grow_time)
 		end
 	end,
 })
@@ -173,7 +176,16 @@ minetest.register_node("cherrytree:blossom_leaves", {
 	sounds = default.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 
-decay
+	on_timer = function(pos)
+		pos.y = pos.y - 1
+		local node = minetest.get_node_or_nil(pos)
+		if node and node.name == "air" then
+			minetest.set_node(pos, {name = "cherrytree:cherries"})
+			return false
+		else
+			return true
+		end
+    end
 })
 
 -- cherrytree tree leaves

@@ -1,24 +1,49 @@
 --
--- Maple
+-- Oak
 --
 
-local modname = "maple"
+local modname = "oak"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
--- Maple
+--Acorn
 
-local function grow_new_maple_tree(pos)
+minetest.register_node("oak:acorn", {
+	description = S("Acorn"),
+	drawtype = "plantlike",
+	tiles = {"oak_acorn.png"},
+	inventory_image = "oak_acorn.png",
+	paramtype = "light",
+	sunlight_propagates = true,
+	walkable = false,
+	is_ground_content = false,
+	selection_box = {
+		type = "fixed",
+		fixed = {-3 / 16, -7 / 16, -3 / 16, 3 / 16, 4 / 16, 3 / 16}
+	},
+	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
+		leafdecay = 3, leafdecay_drop = 1},
+	on_use = minetest.item_eat(2),
+	sounds = default.node_sound_leaves_defaults(),
+
+	after_place_node = function(pos, placer, itemstack)
+		minetest.set_node(pos, {name = "oak:acorn", param2 = 1})
+	end,
+})
+
+-- oak
+
+local function grow_new_oak_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
-		minetest.get_node_timer(pos):start(math.random(240, 600))
+		minetest.get_node_timer(pos):start(math.random(1, 1))
 		return
 	end
 	minetest.remove_node(pos)
-	minetest.place_schematic({x = pos.x-3, y = pos.y-1, z = pos.z-3}, modpath.."/schematics/maple.mts", "0", nil, false)
+	minetest.place_schematic({x = pos.x-5, y = pos.y, z = pos.z-5}, modpath.."/schematics/oak.mts", "0", nil, false)
 end
 
 --
@@ -31,19 +56,20 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 		place_on = {"rainf:meadow"},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.0005,
-			scale = 0.0002,
+			offset = 0.0008,
+			scale = 0.00004,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 3462,
+			seed = 6431,
 			octaves = 3,
 			persist = 0.66
 		},
 		biomes = {"rainf"},
 		y_min = 1,
-		y_max = 62,
-		schematic = modpath.."/schematics/maple.mts",
-		flags = "place_center_x, place_center_z, force_placement",
+		y_max = 80,
+		schematic = modpath.."/schematics/oak.mts",
+		flags = "place_center_x, place_center_z,  force_placement",
 		rotation = "random",
+		place_offset_y = 0,
 	})
 end
 
@@ -51,16 +77,16 @@ end
 -- Nodes
 --
 
-minetest.register_node("maple:sapling", {
-	description = S("Maple Tree Sapling"),
+minetest.register_node("oak:sapling", {
+	description = S("Oak Sapling"),
 	drawtype = "plantlike",
-	tiles = {"maple_sapling.png"},
-	inventory_image = "maple_sapling.png",
-	wield_image = "maple_sapling.png",
+	tiles = {"oak_sapling.png"},
+	inventory_image = "oak_sapling.png",
+	wield_image = "oak_sapling.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
-	on_timer = grow_new_maple_tree,
+	on_timer = grow_new_oak_tree,
 	selection_box = {
 		type = "fixed",
 		fixed = {-4 / 16, -0.5, -4 / 16, 4 / 16, 7 / 16, 4 / 16}
@@ -70,12 +96,12 @@ minetest.register_node("maple:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(2400,4800))
+		minetest.get_node_timer(pos):start(math.random(1,1))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"maple:sapling",
+			"oak:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -87,37 +113,35 @@ minetest.register_node("maple:sapling", {
 	end,
 })
 
-minetest.register_node("maple:trunk", {
-	description = S("Maple Trunk"),
+minetest.register_node("oak:trunk", {
+	description = S("Oak Trunk"),
 	tiles = {
-		"maple_trunk_top.png",
-		"maple_trunk_top.png",
-		"maple_trunk.png"
+		"oak_trunk_top.png",
+		"oak_trunk_top.png",
+		"oak_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
-	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
--- maple wood
-minetest.register_node("maple:wood", {
-	description = S("Maple Wood"),
-	tiles = {"maple_wood.png"},
-	paramtype2 = "facedir",
-	place_param2 = 0,
+-- oak wood
+minetest.register_node("oak:wood", {
+	description = S("Oak Wood"),
+	tiles = {"oak_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
 })
 
--- maple tree leaves
-minetest.register_node("maple:leaves", {
-	description = S("Maple Leaves"),
+-- oak tree leaves
+minetest.register_node("oak:leaves", {
+	description = S("Oak Leaves"),
 	drawtype = "allfaces_optional",
-	tiles = {"maple_leaves.png"},
-	wield_image = "maple_leaves.png",
+	tiles = {"oak_leaves.png"},
+	inventory_image = "oak_leaves.png",
+	wield_image = "oak_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -125,8 +149,8 @@ minetest.register_node("maple:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"maple:sapling"}, rarity = 20},
-			{items = {"maple:leaves"}}
+			{items = {"oak:sapling"}, rarity = 20},
+			{items = {"oak:leaves"}}
 		}
 	},
 	sounds = default.node_sound_leaves_defaults(),
@@ -142,34 +166,34 @@ minetest.register_node("maple:leaves", {
 --
 
 minetest.register_craft({
-	output = "maple:wood 4",
-	recipe = {{"maple:trunk"}}
+	output = "oak:wood 4",
+	recipe = {{"oak:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:trunk",
+	recipe = "oak:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:wood",
+	recipe = "oak:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "maple:convert_maple_saplings_to_node_timer",
-	nodenames = {"maple:sapling"},
+	name = "oak:convert_oak_saplings_to_node_timer",
+	nodenames = {"oak:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
+		minetest.get_node_timer(pos):start(math.random(1, 1))
 	end
 })
 
 default.register_leafdecay({
-	trunks = {"maple:trunk"},
-	leaves = {"maple:leaves"},
+	trunks = {"oak:trunk"},
+	leaves = {"oak:leaves"},
 	radius = 3,
 })
 
@@ -177,18 +201,18 @@ default.register_leafdecay({
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
-		"maple_trunk",
-		"maple:trunk",
+		"oak_trunk",
+		"oak:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-		{"maple_wood.png"},
-		S("Maple Stair"),
-		S("Maple Slab"),
+		{"oak_wood.png"},
+		S("Oak Stair"),
+		S("Oak Slab"),
 		default.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"maple:sapling", grow_new_maple_tree, "soil"},
+		{"oak:sapling", grow_new_oak_tree, "soil"},
 	})
 end
