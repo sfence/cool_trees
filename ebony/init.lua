@@ -53,7 +53,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("ebony:sapling", {
+minetest.register_node("hades_ebony:sapling", {
 	description = S("Ebony Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"ebony_sapling.png"},
@@ -69,7 +69,7 @@ minetest.register_node("ebony:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -77,7 +77,7 @@ minetest.register_node("ebony:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"ebony:sapling",
+			"hades_ebony:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -89,7 +89,7 @@ minetest.register_node("ebony:sapling", {
 	end,
 })
 
-minetest.register_node("ebony:trunk", {
+minetest.register_node("hades_ebony:trunk", {
 	description = S("Ebony Trunk"),
 	tiles = {
 		"ebony_trunk_top.png",
@@ -97,25 +97,25 @@ minetest.register_node("ebony:trunk", {
 		"ebony_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- ebony wood
-minetest.register_node("ebony:wood", {
+minetest.register_node("hades_ebony:wood", {
 	description = S("Ebony Wood"),
 	tiles = {"ebony_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- ebony tree leaves
-minetest.register_node("ebony:leaves", {
+minetest.register_node("hades_ebony:leaves", {
 	description = S("Ebony Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"ebony_leaves.png"},
@@ -128,11 +128,11 @@ minetest.register_node("ebony:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"ebony:sapling"}, rarity = 20},
-			{items = {"ebony:leaves"}}
+			{items = {"hades_ebony:sapling"}, rarity = 20},
+			{items = {"hades_ebony:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -140,7 +140,7 @@ minetest.register_node("ebony:leaves", {
 -- Creeper/Vines...
 --
 
-minetest.register_node("ebony:creeper", {
+minetest.register_node("hades_ebony:creeper", {
 	description = S("Ebony Creeper"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -157,10 +157,10 @@ minetest.register_node("ebony:creeper", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("ebony:creeper_leaves", {
+minetest.register_node("hades_ebony:creeper_leaves", {
 	description = S("Ebony Creeper with Leaves"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -177,10 +177,10 @@ minetest.register_node("ebony:creeper_leaves", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("ebony:liana", {
+minetest.register_node("hades_ebony:liana", {
 	description = S("Ebony Liana"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -197,12 +197,12 @@ minetest.register_node("ebony:liana", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1,
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
 --Persimmon Kaki
 
-minetest.register_node("ebony:persimmon", {
+minetest.register_node("hades_ebony:persimmon", {
 	description = S("Persimmon"),
 	drawtype = "plantlike",
 	tiles = {"ebony_persimmon.png"},
@@ -218,10 +218,10 @@ minetest.register_node("ebony:persimmon", {
 	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
 		leafdecay = 3, leafdecay_drop = 1},
 	on_use = minetest.item_eat(4),
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "ebony:persimmon", param2 = 1})
+		minetest.set_node(pos, {name = "hades_ebony:persimmon", param2 = 1})
 	end,
 })
 
@@ -234,53 +234,57 @@ minetest.register_node("ebony:persimmon", {
 --
 
 minetest.register_craft({
-	output = "ebony:wood 4",
-	recipe = {{"ebony:trunk"}}
+	output = "hades_ebony:wood 4",
+	recipe = {{"hades_ebony:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "ebony:trunk",
+	recipe = "hades_ebony:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "ebony:wood",
+	recipe = "hades_ebony:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "ebony:convert_ebony_saplings_to_node_timer",
-	nodenames = {"ebony:sapling"},
+	name = "hades_ebony:convert_ebony_saplings_to_node_timer",
+	nodenames = {"hades_ebony:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"ebony:trunk"},
-	leaves = {"ebony:leaves"},
+	trunks = {"hades_ebony:trunk"},
+	leaves = {"hades_ebony:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"ebony_trunk",
-		"ebony:trunk",
+		"hades_ebony:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"ebony_wood.png"},
 		S("Ebony Stair"),
+		S("Outer Ebony Stair"),
+		S("Inner Ebony Stair"),
 		S("Ebony Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"ebony:sapling", grow_new_ebony_tree, "soil"},
+		{"hades_ebony:sapling", grow_new_ebony_tree, "soil"},
 	})
 end

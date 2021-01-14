@@ -13,11 +13,11 @@ bamboo = {}
 -- bamboo stalk with leaves
 
 local ai = {name = "air", param1 = 000}
-local bt = {name = "bamboo:trunk", param1 = 255}
-local bf = {name = "bamboo:trunk", param1 = 255, force_place = true}
+local bt = {name = "hades_bamboo:trunk", param1 = 255}
+local bf = {name = "hades_bamboo:trunk", param1 = 255, force_place = true}
 local fd = {name = "default:dirt", param1 = 255, force_place = true}
-local lp = {name = "bamboo:leaves", param1 = 255}
-local lr = {name = "bamboo:leaves", param1 = 100}
+local lp = {name = "hades_bamboo:leaves", param1 = 255}
+local lr = {name = "hades_bamboo:leaves", param1 = 100}
 
 bamboo.bambootree = {
 
@@ -138,7 +138,7 @@ minetest.register_decoration({
 --
 
 -- Bamboo (thanks to Nelo-slay on DeviantArt for the free Bamboo base image)
-minetest.register_node("bamboo:trunk", {
+minetest.register_node("hades_bamboo:trunk", {
 	description = S("Bamboo"),
 	drawtype = "plantlike",
 	tiles = {"bamboo.png"},
@@ -153,7 +153,7 @@ minetest.register_node("bamboo:trunk", {
 	},
 	is_ground_content = false,
 	groups = {choppy = 3, oddly_breakable_by_hand = 1, flammable = 2, tree = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_dig_node = function(pos, node, metadata, digger)
 		default.dig_up(pos, node, digger)
 	end,
@@ -161,18 +161,18 @@ minetest.register_node("bamboo:trunk", {
 })
 
 -- bamboo wood
-minetest.register_node("bamboo:wood", {
+minetest.register_node("hades_bamboo:wood", {
 	description = S("Bamboo Wood"),
 	tiles = {"bamboo_floor.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- bamboo stalk leaves
-minetest.register_node("bamboo:leaves", {
+minetest.register_node("hades_bamboo:leaves", {
 	description = S("Bamboo Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"bamboo_leaves.png"},
@@ -185,17 +185,17 @@ minetest.register_node("bamboo:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"bamboo:sprout"}, rarity = 10},
-			{items = {"bamboo:leaves"}}
+			{items = {"hades_bamboo:sprout"}, rarity = 10},
+			{items = {"hades_bamboo:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
 
 -- Bamboo Sprout
-minetest.register_node("bamboo:sprout", {
+minetest.register_node("hades_bamboo:sprout", {
 	description = S("Bamboo Sprout"),
 	drawtype = "plantlike",
 	tiles = {"bamboo_sprout.png"},
@@ -208,7 +208,7 @@ minetest.register_node("bamboo:sprout", {
 		snappy = 3, attached_node = 1, flammable = 2,
 		dig_immediate = 3, ethereal_sapling = 1
 	},
-	sounds = default.node_sound_defaults(),
+	sounds = hades_sounds.node_sound_defaults(),
 	selection_box = {
 		type = "fixed",
 		fixed = {-4 / 16, -0.5, -4 / 16, 4 / 16, 0, 4 / 16}
@@ -223,19 +223,21 @@ minetest.register_node("bamboo:sprout", {
 
 -- crafts
 minetest.register_craft({
-	output = "bamboo:wood 4",
-	recipe = {{"bamboo:trunk"}}
+	output = "hades_bamboo:wood 4",
+	recipe = {{"hades_bamboo:trunk"}}
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"bamboo:trunk"},
-	leaves = {"bamboo:leaves"},
+	trunks = {"hades_bamboo:trunk"},
+	leaves = {"hades_bamboo:leaves"},
 	radius = 3,
 })
+--]]
 
 minetest.register_lbm({
-	name = "bamboo:convert_bambootree_sprouts_to_node_timer",
-	nodenames = {"bamboo:sprout"},
+	name = "hades_bamboo:convert_bambootree_sprouts_to_node_timer",
+	nodenames = {"hades_bamboo:sprout"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -243,7 +245,7 @@ minetest.register_lbm({
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"bamboo:sprout", grow_new_bambootree_tree, "soil"},
+		{"hades_bamboo:sprout", grow_new_bambootree_tree, "soil"},
 	})
 end
 
@@ -252,21 +254,23 @@ end
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"bamboo_trunk",
-		"bamboo:trunk",
+		"hades_bamboo:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"bamboo_floor.png"},
 		S("Bamboo Stair"),
+		S("Outer Bamboo Stair"),
+		S("Inner Bamboo Stair"),
 		S("Bamboo Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 -- stairsplus/moreblocks
 if minetest.get_modpath("moreblocks") then
-	stairsplus:register_all("bamboo", "wood", "bamboo:wood", {
+	stairsplus:register_all("bamboo", "wood", "hades_bamboo:wood", {
 		description = "Bamboo",
 		tiles = {"bamboo_floor.png"},
 		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-		sounds = default.node_sound_wood_defaults(),
+		sounds = hades_sounds.node_sound_wood_defaults(),
 	})
 end

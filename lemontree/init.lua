@@ -12,7 +12,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Lemon Fruit
 
-minetest.register_node("lemontree:lemon", {
+minetest.register_node("hades_lemontree:lemon", {
 	description = S("Lemon"),
 	drawtype = "plantlike",
 	tiles = {"lemontree_lemon.png"},
@@ -28,23 +28,23 @@ minetest.register_node("lemontree:lemon", {
 	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
 		leafdecay = 3, leafdecay_drop = 1},
 	on_use = minetest.item_eat(2),
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "lemontree:lemon", param2 = 1})
+		minetest.set_node(pos, {name = "hades_lemontree:lemon", param2 = 1})
 	end,
 
 	on_dig = function(pos, node, digger)
 		if digger:is_player() then
 			local inv = digger:get_inventory()
-			if inv:room_for_item("main", "lemontree:lemon") then
-				inv:add_item("main", "lemontree:lemon")
+			if inv:room_for_item("main", "hades_lemontree:lemon") then
+				inv:add_item("main", "hades_lemontree:lemon")
 			end
 		end
 		minetest.remove_node(pos)
 		pos.y = pos.y + 1
 		local node_above = minetest.get_node_or_nil(pos)
-		if node_above and node_above.param2 == 0 and node_above.name == "lemontree:leaves" then
+		if node_above and node_above.param2 == 0 and node_above.name == "hades_lemontree:leaves" then
 			local timer = minetest.get_node_timer(pos)
 			timer:start(fruit_grow_time)
 		end
@@ -93,7 +93,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("lemontree:sapling", {
+minetest.register_node("hades_lemontree:sapling", {
 	description = S("Lemon Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"lemontree_sapling.png"},
@@ -109,7 +109,7 @@ minetest.register_node("lemontree:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -117,7 +117,7 @@ minetest.register_node("lemontree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"lemontree:sapling",
+			"hades_lemontree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -128,7 +128,7 @@ minetest.register_node("lemontree:sapling", {
 	end,
 })
 
-minetest.register_node("lemontree:trunk", {
+minetest.register_node("hades_lemontree:trunk", {
 	description = S("Lemon Tree Trunk"),
 	tiles = {
 		"lemontree_trunk_top.png",
@@ -136,25 +136,25 @@ minetest.register_node("lemontree:trunk", {
 		"lemontree_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- lemontree wood
-minetest.register_node("lemontree:wood", {
+minetest.register_node("hades_lemontree:wood", {
 	description = S("Lemon Tree Wood"),
 	tiles = {"lemontree_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- lemontree tree leaves
-minetest.register_node("lemontree:leaves", {
+minetest.register_node("hades_lemontree:leaves", {
 	description = S("Lemon Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"lemontree_leaves.png"},
@@ -167,18 +167,18 @@ minetest.register_node("lemontree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"lemontree:sapling"}, rarity = 20},
-			{items = {"lemontree:leaves"}}
+			{items = {"hades_lemontree:sapling"}, rarity = 20},
+			{items = {"hades_lemontree:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 
 	on_timer = function(pos)
 		pos.y = pos.y - 1
 		local node = minetest.get_node_or_nil(pos)
 		if node and node.name == "air" then
-			minetest.set_node(pos, {name = "lemontree:lemon"})
+			minetest.set_node(pos, {name = "hades_lemontree:lemon"})
 			return false
 		else
 			return true
@@ -195,58 +195,62 @@ minetest.register_node("lemontree:leaves", {
 --
 
 minetest.register_craft({
-	output = "lemontree:wood 4",
-	recipe = {{"lemontree:trunk"}}
+	output = "hades_lemontree:wood 4",
+	recipe = {{"hades_lemontree:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "lemontree:trunk",
+	recipe = "hades_lemontree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "lemontree:wood",
+	recipe = "hades_lemontree:wood",
 	burntime = 7,
 })
 
 minetest.register_lbm({
-	name = "lemontree:convert_lemontree_saplings_to_node_timer",
-	nodenames = {"lemontree:sapling"},
+	name = "hades_lemontree:convert_lemontree_saplings_to_node_timer",
+	nodenames = {"hades_lemontree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"lemontree:trunk"},
-	leaves = {"lemontree:leaves"},
+	trunks = {"hades_lemontree:trunk"},
+	leaves = {"hades_lemontree:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"lemontree_trunk",
-		"lemontree:trunk",
+		"hades_lemontree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"lemontree_wood.png"},
 		S("Lemon Tree Stair"),
+		S("Outer Lemon Tree Stair"),
+		S("Inner Lemon Tree Stair"),
 		S("Lemon Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"lemontree:sapling", grow_new_lemontree_tree, "soil"},
+		{"hades_lemontree:sapling", grow_new_lemontree_tree, "soil"},
 	})
 end
 
 if minetest.get_modpath("cork") ~= nil then
-	minetest.register_node("lemontree:trunk_nobark", {
+	minetest.register_node("hades_lemontree:trunk_nobark", {
 		description = S("Lemon Tree Trunk"),
 		tiles = {
 			"lemontree_trunk_top.png",
@@ -254,20 +258,20 @@ if minetest.get_modpath("cork") ~= nil then
 			"lemontree_trunk_nobark.png"
 		},
 		groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-		sounds = default.node_sound_wood_defaults(),
+		sounds = hades_sounds.node_sound_wood_defaults(),
 		paramtype2 = "facedir",
 		is_ground_content = false,
 		on_place = minetest.rotate_node,
 	})
 
 	minetest.register_craft({
-		output = "lemontree:wood 4",
-		recipe = {{"lemontree:trunk_nobark"}}
+		output = "hades_lemontree:wood 4",
+		recipe = {{"hades_lemontree:trunk_nobark"}}
 	})
 
 	minetest.register_craft({
 		type = "fuel",
-		recipe = "lemontree:trunk_nobark",
+		recipe = "hades_lemontree:trunk_nobark",
 		burntime = 25,
 	})
 end

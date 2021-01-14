@@ -64,7 +64,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("maple:sapling", {
+minetest.register_node("hades_maple:sapling", {
 	description = S("Maple Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"maple_sapling.png"},
@@ -80,7 +80,7 @@ minetest.register_node("maple:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -88,7 +88,7 @@ minetest.register_node("maple:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"maple:sapling",
+			"hades_maple:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -100,7 +100,7 @@ minetest.register_node("maple:sapling", {
 	end,
 })
 
-minetest.register_node("maple:trunk", {
+minetest.register_node("hades_maple:trunk", {
 	description = S("Maple Trunk"),
 	tiles = {
 		"maple_trunk_top.png",
@@ -108,25 +108,25 @@ minetest.register_node("maple:trunk", {
 		"maple_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- maple wood
-minetest.register_node("maple:wood", {
+minetest.register_node("hades_maple:wood", {
 	description = S("Maple Wood"),
 	tiles = {"maple_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- maple tree leaves
-minetest.register_node("maple:leaves", {
+minetest.register_node("hades_maple:leaves", {
 	description = S("Maple Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"maple_leaves.png"},
@@ -138,11 +138,11 @@ minetest.register_node("maple:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"maple:sapling"}, rarity = 20},
-			{items = {"maple:leaves"}}
+			{items = {"hades_maple:sapling"}, rarity = 20},
+			{items = {"hades_maple:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -155,54 +155,58 @@ minetest.register_node("maple:leaves", {
 --
 
 minetest.register_craft({
-	output = "maple:wood 4",
-	recipe = {{"maple:trunk"}}
+	output = "hades_maple:wood 4",
+	recipe = {{"hades_maple:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:trunk",
+	recipe = "hades_maple:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "maple:wood",
+	recipe = "hades_maple:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "maple:convert_maple_saplings_to_node_timer",
-	nodenames = {"maple:sapling"},
+	name = "hades_maple:convert_maple_saplings_to_node_timer",
+	nodenames = {"hades_maple:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"maple:trunk"},
-	leaves = {"maple:leaves"},
+	trunks = {"hades_maple:trunk"},
+	leaves = {"hades_maple:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"maple_trunk",
-		"maple:trunk",
+		"hades_maple:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"maple_wood.png"},
 		S("Maple Stair"),
+		S("Outer Maple Stair"),
+		S("Inner Maple Stair"),
 		S("Maple Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"maple:sapling", grow_new_maple_tree, "soil"},
+		{"hades_maple:sapling", grow_new_maple_tree, "soil"},
 	})
 end
 
@@ -215,9 +219,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "maple_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"maple:wood", "maple:wood"},
-				{"maple:wood", "maple:wood"},
-				{"maple:wood", "maple:wood"},
+				{"hades_maple:wood", "hades_maple:wood"},
+				{"hades_maple:wood", "hades_maple:wood"},
+				{"hades_maple:wood", "hades_maple:wood"},
 			}
 	})
 end

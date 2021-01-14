@@ -8,10 +8,10 @@ local S = minetest.get_translator(minetest.get_current_modname())
 palm = {}
 
 local ai = {name = "air", param1 = 000}
-local tr = {name = "palm:trunk", param1 = 255}
-local tf = {name = "palm:trunk", param1 = 255, force_place = true}
-local lp = {name = "palm:leaves", param1 = 255}
-local cn = {name = "palm:coconut", param1 = 255}
+local tr = {name = "hades_palm:trunk", param1 = 255}
+local tf = {name = "hades_palm:trunk", param1 = 255, force_place = true}
+local lp = {name = "hades_palm:leaves", param1 = 255}
+local cn = {name = "hades_palm:coconut", param1 = 255}
 
 palm.palmtree = {
 
@@ -167,7 +167,7 @@ minetest.register_decoration({
 -- Nodes
 --
 
-minetest.register_node("palm:sapling", {
+minetest.register_node("hades_palm:sapling", {
 	description = S("Palm Sapling"),
 	drawtype = "plantlike",
 	tiles = {"palm_sapling.png"},
@@ -183,7 +183,7 @@ minetest.register_node("palm:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -191,7 +191,7 @@ minetest.register_node("palm:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"palm:sapling",
+			"hades_palm:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -204,7 +204,7 @@ minetest.register_node("palm:sapling", {
 })
 
 -- palm trunk (thanks to VanessaE for palm textures)
-minetest.register_node("palm:trunk", {
+minetest.register_node("hades_palm:trunk", {
 	description = S("Palm Trunk"),
 	tiles = {
 		"palm_trunk_top.png",
@@ -212,23 +212,23 @@ minetest.register_node("palm:trunk", {
 		"palm_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- palm wood
-minetest.register_node("palm:wood", {
+minetest.register_node("hades_palm:wood", {
 	description = S("Palm Wood"),
 	tiles = {"palm_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- palm tree leaves
-minetest.register_node("palm:leaves", {
+minetest.register_node("hades_palm:leaves", {
 	description = S("Palm Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"palm_leaves.png"},
@@ -241,16 +241,16 @@ minetest.register_node("palm:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"palm:sapling"}, rarity = 10},
-			{items = {"palm:leaves"}}
+			{items = {"hades_palm:sapling"}, rarity = 10},
+			{items = {"hades_palm:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
 -- Coconut (Gives 4 coconut slices, each heal 1/2 heart)
-minetest.register_node("palm:coconut", {
+minetest.register_node("hades_palm:coconut", {
 	description = S("Coconut"),
 	drawtype = "normal",
 	walkable = false,
@@ -267,12 +267,12 @@ minetest.register_node("palm:coconut", {
 		snappy = 1, oddly_breakable_by_hand = 1, cracky = 1,
 		choppy = 1, flammable = 1, leafdecay = 3, leafdecay_drop = 1
 	},
-	drop = "palm:coconut_slice 4",
-	sounds = default.node_sound_wood_defaults(),
+	drop = "hades_palm:coconut_slice 4",
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- Candle from Wax and String/Cotton
-minetest.register_node("palm:candle", {
+minetest.register_node("hades_palm:candle", {
 	description = S("Coconut Wax Candle"),
 	drawtype = "plantlike",
 	inventory_image = "palm_candle_static.png",
@@ -293,7 +293,7 @@ minetest.register_node("palm:candle", {
 	sunlight_propagates = true,
 	walkable = false,
 	groups = {dig_immediate = 3, attached_node = 1},
-	sounds = default.node_sound_defaults(),
+	sounds = hades_sounds.node_sound_defaults(),
 	selection_box = {
 		type = "fixed",
 		fixed = { -0.15, -0.5, -0.15, 0.15, 0, 0.15 }
@@ -307,9 +307,9 @@ if minetest.get_modpath("doors") ~= nil then
 		inventory_image = "palm_door_wood_inv.png",
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		recipe = {
-			{"palm:wood", "palm:wood"},
-			{"palm:leaves", "palm:leaves"},
-			{"palm:wood", "palm:wood"},
+			{"hades_palm:wood", "hades_palm:wood"},
+			{"hades_palm:leaves", "hades_palm:leaves"},
+			{"hades_palm:wood", "hades_palm:wood"},
 		}
 	})
 end
@@ -319,7 +319,7 @@ end
 --
 
 -- Coconut Slice (Heals half heart when eaten)
-minetest.register_craftitem("palm:coconut_slice", {
+minetest.register_craftitem("hades_palm:coconut_slice", {
 	description = S("Coconut Slice"),
 	inventory_image = "palm_coconut_slice.png",
 	wield_image = "palm_coconut_slice.png",
@@ -327,7 +327,7 @@ minetest.register_craftitem("palm:coconut_slice", {
 })
 
 -- Palm Wax
-minetest.register_craftitem("palm:wax", {
+minetest.register_craftitem("hades_palm:wax", {
 	description = S("Palm Wax"),
 	inventory_image = "palm_wax.png",
 	wield_image = "palm_wax.png",
@@ -340,80 +340,84 @@ minetest.register_craftitem("palm:wax", {
 minetest.register_craft({
 	type = "cooking",
 	cooktime = 10,
-	output = "palm:wax",
-	recipe = "palm:leaves"
+	output = "hades_palm:wax",
+	recipe = "hades_palm:leaves"
 })
 
 
 minetest.register_craft({
-	output = "palm:wood 4",
-	recipe = {{"palm:trunk"}}
+	output = "hades_palm:wood 4",
+	recipe = {{"hades_palm:trunk"}}
 })
 
 minetest.register_craft({
-	output = "palm:candle 2",
+	output = "hades_palm:candle 2",
 	recipe = {
 		{"farming:cotton"},
-		{"palm:wax"},
-		{"palm:wax"},
+		{"hades_palm:wax"},
+		{"hades_palm:wax"},
 	}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "palm:sapling",
+	recipe = "hades_palm:sapling",
 	burntime = 10,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "palm:trunk",
+	recipe = "hades_palm:trunk",
 	burntime = 34,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "palm:wood",
+	recipe = "hades_palm:wood",
 	burntime = 9,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "palm:leaves",
+	recipe = "hades_palm:leaves",
 	burntime = 2,
 })
 
 minetest.register_lbm({
-	name = "palm:convert_palmtree_saplings_to_node_timer",
-	nodenames = {"palm:sapling"},
+	name = "hades_palm:convert_palmtree_saplings_to_node_timer",
+	nodenames = {"hades_palm:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"palm:trunk"},
-	leaves = {"palm:leaves", "palm:coconut"},
+	trunks = {"hades_palm:trunk"},
+	leaves = {"hades_palm:leaves", "hades_palm:coconut"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"palm_trunk",
-		"palm:trunk",
+		"hades_palm:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"palm_wood.png"},
 		S("Palm Tree Stair"),
+		S("Outer Palm Tree Stair"),
+		S("Inner Palm Tree Stair"),
 		S("Palm Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"palm:sapling", grow_new_palm_tree, "soil"},
-		{"palm:sapling", grow_new_palm_tree, "sand"},
+		{"hades_palm:sapling", grow_new_palm_tree, "soil"},
+		{"hades_palm:sapling", grow_new_palm_tree, "sand"},
 	})
 end

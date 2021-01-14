@@ -14,9 +14,9 @@ birch = {}
 -- birch tree
 
 local ai = {name = "air", param1 = 000}
-local tr = {name = "birch:trunk", param1 = 255, force_place = true}
-local lp = {name = "birch:leaves", param1 = 255}
-local lr = {name = "birch:leaves", param1 = 255}
+local tr = {name = "hades_birch:trunk", param1 = 255, force_place = true}
+local lp = {name = "hades_birch:leaves", param1 = 255}
+local lr = {name = "hades_birch:leaves", param1 = 255}
 
 birch.birchtree = {
 
@@ -127,7 +127,7 @@ minetest.register_decoration({
 -- Nodes
 --
 
-minetest.register_node("birch:sapling", {
+minetest.register_node("hades_birch:sapling", {
 	description = S("Birch Sapling"),
 	drawtype = "plantlike",
 	tiles = {"birch_sapling.png"},
@@ -143,7 +143,7 @@ minetest.register_node("birch:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -151,7 +151,7 @@ minetest.register_node("birch:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"birch:sapling",
+			"hades_birch:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -164,7 +164,7 @@ minetest.register_node("birch:sapling", {
 })
 
 -- birch trunk
-minetest.register_node("birch:trunk", {
+minetest.register_node("hades_birch:trunk", {
 	description = S("Birch Trunk"),
 	tiles = {
 		"birch_trunk_top.png",
@@ -172,23 +172,23 @@ minetest.register_node("birch:trunk", {
 		"birch_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 	is_ground_content = false,
 })
 
 -- birch wood
-minetest.register_node("birch:wood", {
+minetest.register_node("hades_birch:wood", {
 	description = S("Birch Wood"),
 	tiles = {"birch_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- birch tree leaves
-minetest.register_node("birch:leaves", {
+minetest.register_node("hades_birch:leaves", {
 	description = S("Birch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"birch_leaves.png"},
@@ -201,11 +201,11 @@ minetest.register_node("birch:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"birch:sapling"}, rarity = 20},
-			{items = {"birch:leaves"}}
+			{items = {"hades_birch:sapling"}, rarity = 20},
+			{items = {"hades_birch:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -218,54 +218,58 @@ minetest.register_node("birch:leaves", {
 --
 
 minetest.register_craft({
-	output = "birch:wood 4",
-	recipe = {{"birch:trunk"}}
+	output = "hades_birch:wood 4",
+	recipe = {{"hades_birch:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "birch:trunk",
+	recipe = "hades_birch:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "birch:wood",
+	recipe = "hades_birch:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "birch:convert_birch_saplings_to_node_timer",
-	nodenames = {"birch:sapling"},
+	name = "hades_birch:convert_birch_saplings_to_node_timer",
+	nodenames = {"hades_birch:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"birch:trunk"},
-	leaves = {"birch:leaves"},
+	trunks = {"hades_birch:trunk"},
+	leaves = {"hades_birch:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"birch_trunk",
-		"birch:trunk",
+		"hades_birch:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"birch_wood.png"},
 		S("Birch Tree Stair"),
+		S("Outer Birch Tree Stair"),
+		S("Inner Birch Tree Stair"),
 		S("Birch Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"birch:sapling", grow_new_birch_tree, "soil"},
+		{"hades_birch:sapling", grow_new_birch_tree, "soil"},
 	})
 end
 
@@ -278,9 +282,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "birch_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"birch:wood", "birch:wood"},
-				{"birch:wood", "birch:wood"},
-				{"birch:wood", "birch:wood"},
+				{"hades_birch:wood", "hades_birch:wood"},
+				{"hades_birch:wood", "hades_birch:wood"},
+				{"hades_birch:wood", "hades_birch:wood"},
 			}
 	})
 end

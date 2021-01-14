@@ -9,7 +9,7 @@ local mg_name = minetest.get_mapgen_setting("mg_name")
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
-minetest.register_node("pomegranate:pomegranate", {
+minetest.register_node("hades_pomegranate:pomegranate", {
 	description = S("Pomegranate"),
 	drawtype = "plantlike",
 	tiles = {"pomegranate.png"},
@@ -25,10 +25,10 @@ minetest.register_node("pomegranate:pomegranate", {
 	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
 		leafdecay = 3, leafdecay_drop = 1},
 	on_use = minetest.item_eat(2),
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "pomegranate:pomegranate", param2 = 1})
+		minetest.set_node(pos, {name = "hades_pomegranate:pomegranate", param2 = 1})
 	end,
 })
 
@@ -74,7 +74,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("pomegranate:sapling", {
+minetest.register_node("hades_pomegranate:sapling", {
 	description = S("Pomegranate Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"pomegranate_sapling.png"},
@@ -90,7 +90,7 @@ minetest.register_node("pomegranate:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -98,7 +98,7 @@ minetest.register_node("pomegranate:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"pomegranate:sapling",
+			"hades_pomegranate:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -110,7 +110,7 @@ minetest.register_node("pomegranate:sapling", {
 	end,
 })
 
-minetest.register_node("pomegranate:trunk", {
+minetest.register_node("hades_pomegranate:trunk", {
 	description = S("Pomegranate Tree Trunk"),
 	tiles = {
 		"pomegranate_trunk_top.png",
@@ -118,22 +118,22 @@ minetest.register_node("pomegranate:trunk", {
 		"pomegranate_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 })
 
 -- pomegranate wood
-minetest.register_node("pomegranate:wood", {
+minetest.register_node("hades_pomegranate:wood", {
 	description = S("Pomegranate Tree Wood"),
 	tiles = {"pomegranate_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- pomegranate tree leaves
-minetest.register_node("pomegranate:leaves", {
+minetest.register_node("hades_pomegranate:leaves", {
 	description = S("Pomegranate Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"pomegranate_leaves.png"},
@@ -146,11 +146,11 @@ minetest.register_node("pomegranate:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"pomegranate:sapling"}, rarity = 20},
-			{items = {"pomegranate:leaves"}}
+			{items = {"hades_pomegranate:sapling"}, rarity = 20},
+			{items = {"hades_pomegranate:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -158,7 +158,7 @@ minetest.register_node("pomegranate:leaves", {
 -- Craftitems
 --
 
-minetest.register_craftitem("pomegranate:section", {
+minetest.register_craftitem("hades_pomegranate:section", {
 	description = S("Pomegranate Section"),
 	inventory_image = "pomegranate_section.png",
 	on_use = minetest.item_eat(3),
@@ -170,57 +170,61 @@ minetest.register_craftitem("pomegranate:section", {
 --
 
 minetest.register_craft({
-	output = "pomegranate:wood 4",
-	recipe = {{"pomegranate:trunk"}}
+	output = "hades_pomegranate:wood 4",
+	recipe = {{"hades_pomegranate:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "pomegranate:trunk",
+	recipe = "hades_pomegranate:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "pomegranate:wood",
+	recipe = "hades_pomegranate:wood",
 	burntime = 7,
 })
 
 minetest.register_craft({
-	output = "pomegranate:section 4",
-	recipe = {{"pomegranate:pomegranate"}}
+	output = "hades_pomegranate:section 4",
+	recipe = {{"hades_pomegranate:pomegranate"}}
 })
 
 minetest.register_lbm({
-	name = "pomegranate:convert_pomegranate_saplings_to_node_timer",
-	nodenames = {"pomegranate:sapling"},
+	name = "hades_pomegranate:convert_pomegranate_saplings_to_node_timer",
+	nodenames = {"hades_pomegranate:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"pomegranate:trunk"},
-	leaves = {"pomegranate:leaves"},
+	trunks = {"hades_pomegranate:trunk"},
+	leaves = {"hades_pomegranate:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"pomegranate_trunk",
-		"pomegranate:trunk",
+		"hades_pomegranate:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"pomegranate_wood.png"},
 		S("Pomegranate Tree Stair"),
+		S("Outer Pomegranate Tree Stair"),
+		S("Inner Pomegranate Tree Stair"),
 		S("Pomegranate Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"pomegranate:sapling", grow_new_pomegranate_tree, "soil"},
+		{"hades_pomegranate:sapling", grow_new_pomegranate_tree, "soil"},
 	})
 end

@@ -51,7 +51,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("larch:sapling", {
+minetest.register_node("hades_larch:sapling", {
 	description = S("Larch Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"larch_sapling.png"},
@@ -67,7 +67,7 @@ minetest.register_node("larch:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -75,7 +75,7 @@ minetest.register_node("larch:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"larch:sapling",
+			"hades_larch:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -87,7 +87,7 @@ minetest.register_node("larch:sapling", {
 	end,
 })
 
-minetest.register_node("larch:trunk", {
+minetest.register_node("hades_larch:trunk", {
 	description = S("Larch Trunk"),
 	tiles = {
 		"larch_trunk_top.png",
@@ -95,25 +95,25 @@ minetest.register_node("larch:trunk", {
 		"larch_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- larch wood
-minetest.register_node("larch:wood", {
+minetest.register_node("hades_larch:wood", {
 	description = S("Larch Wood"),
 	tiles = {"larch_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- larch tree leaves
-minetest.register_node("larch:leaves", {
+minetest.register_node("hades_larch:leaves", {
 	description = S("Larch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"larch_leaves.png"},
@@ -126,15 +126,15 @@ minetest.register_node("larch:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"larch:sapling"}, rarity = 20},
-			{items = {"larch:leaves"}}
+			{items = {"hades_larch:sapling"}, rarity = 20},
+			{items = {"hades_larch:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
-minetest.register_node("larch:moss", {
+minetest.register_node("hades_larch:moss", {
 	description = S("Larch Moss"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -152,7 +152,7 @@ minetest.register_node("larch:moss", {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1,
 		falling_node = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
 --
@@ -164,55 +164,59 @@ minetest.register_node("larch:moss", {
 --
 
 minetest.register_craft({
-	output = "larch:wood 4",
-	recipe = {{"larch:trunk"}}
+	output = "hades_larch:wood 4",
+	recipe = {{"hades_larch:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "larch:trunk",
+	recipe = "hades_larch:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "larch:wood",
+	recipe = "hades_larch:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "larch:convert_larch_saplings_to_node_timer",
-	nodenames = {"larch:sapling"},
+	name = "hades_larch:convert_larch_saplings_to_node_timer",
+	nodenames = {"hades_larch:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"larch:trunk"},
-	leaves = {"larch:leaves"},
+	trunks = {"hades_larch:trunk"},
+	leaves = {"hades_larch:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"larch_trunk",
-		"larch:trunk",
+		"hades_larch:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"larch_wood.png"},
 		S("Larch Tree Stair"),
+		S("Outer Larch Tree Stair"),
+		S("Inner Larch Tree Stair"),
 		S("Larch Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"larch:sapling", grow_new_larch_tree, "soil"},
+		{"hades_larch:sapling", grow_new_larch_tree, "soil"},
 	})
 end
 
@@ -225,9 +229,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "larch_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"larch:wood", "larch:wood"},
-				{"larch:wood", "larch:wood"},
-				{"larch:wood", "larch:wood"},
+				{"hades_larch:wood", "hades_larch:wood"},
+				{"hades_larch:wood", "hades_larch:wood"},
+				{"hades_larch:wood", "hades_larch:wood"},
 			}
 	})
 end

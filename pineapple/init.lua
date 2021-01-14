@@ -53,7 +53,7 @@ end
 --
 
 -- pineapple
-minetest.register_node("pineapple:pineapple", {
+minetest.register_node("hades_pineapple:pineapple", {
 	description = S("Pineapple"),
 	drawtype = "plantlike_rooted",
 	tiles = {"pineapple_pineapple.png"},
@@ -71,13 +71,13 @@ minetest.register_node("pineapple:pineapple", {
 	walkable = true,
 	waving = 1,
 	groups = {snappy = 3, leafdecay = 3, leaves = 1, flammable = 2},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
-	on_use = minetest.item_eat(3, "pineapple:sapling"),
+	on_use = minetest.item_eat(3, "hades_pineapple:sapling"),
 })
 
 
-minetest.register_node("pineapple:sapling", {
+minetest.register_node("hades_pineapple:sapling", {
 	description = S("Pineapple Sapling"),
 	drawtype = "plantlike",
 	tiles = {"pineapple_pineapple_leaves.png"},
@@ -93,7 +93,7 @@ minetest.register_node("pineapple:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -101,7 +101,7 @@ minetest.register_node("pineapple:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"pineapple:sapling",
+			"hades_pineapple:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -118,8 +118,8 @@ minetest.register_node("pineapple:sapling", {
 --
 
 minetest.register_lbm({
-	name = "pineapple:convert_pineapple_saplings_to_node_timer",
-	nodenames = {"pineapple:sapling"},
+	name = "hades_pineapple:convert_pineapple_saplings_to_node_timer",
+	nodenames = {"hades_pineapple:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -127,6 +127,6 @@ minetest.register_lbm({
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"pineapple:sapling", grow_new_pineapple_tree, "soil"},
+		{"hades_pineapple:sapling", grow_new_pineapple_tree, "soil"},
 	})
 end

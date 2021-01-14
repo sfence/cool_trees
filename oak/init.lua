@@ -11,7 +11,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 --Acorn
 
-minetest.register_node("oak:acorn", {
+minetest.register_node("hades_oak:acorn", {
 	description = S("Acorn"),
 	drawtype = "plantlike",
 	tiles = {"oak_acorn.png"},
@@ -27,10 +27,10 @@ minetest.register_node("oak:acorn", {
 	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
 		leafdecay = 3, leafdecay_drop = 1},
 	on_use = minetest.item_eat(2),
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "oak:acorn", param2 = 1})
+		minetest.set_node(pos, {name = "hades_oak:acorn", param2 = 1})
 	end,
 })
 
@@ -90,7 +90,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("oak:sapling", {
+minetest.register_node("hades_oak:sapling", {
 	description = S("Oak Sapling"),
 	drawtype = "plantlike",
 	tiles = {"oak_sapling.png"},
@@ -106,7 +106,7 @@ minetest.register_node("oak:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1,1))
@@ -114,7 +114,7 @@ minetest.register_node("oak:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"oak:sapling",
+			"hades_oak:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -126,7 +126,7 @@ minetest.register_node("oak:sapling", {
 	end,
 })
 
-minetest.register_node("oak:trunk", {
+minetest.register_node("hades_oak:trunk", {
 	description = S("Oak Trunk"),
 	tiles = {
 		"oak_trunk_top.png",
@@ -134,22 +134,22 @@ minetest.register_node("oak:trunk", {
 		"oak_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 })
 
 -- oak wood
-minetest.register_node("oak:wood", {
+minetest.register_node("hades_oak:wood", {
 	description = S("Oak Wood"),
 	tiles = {"oak_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- oak tree leaves
-minetest.register_node("oak:leaves", {
+minetest.register_node("hades_oak:leaves", {
 	description = S("Oak Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"oak_leaves.png"},
@@ -162,11 +162,11 @@ minetest.register_node("oak:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"oak:sapling"}, rarity = 20},
-			{items = {"oak:leaves"}}
+			{items = {"hades_oak:sapling"}, rarity = 20},
+			{items = {"hades_oak:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -179,54 +179,58 @@ minetest.register_node("oak:leaves", {
 --
 
 minetest.register_craft({
-	output = "oak:wood 4",
-	recipe = {{"oak:trunk"}}
+	output = "hades_oak:wood 4",
+	recipe = {{"hades_oak:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "oak:trunk",
+	recipe = "hades_oak:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "oak:wood",
+	recipe = "hades_oak:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "oak:convert_oak_saplings_to_node_timer",
-	nodenames = {"oak:sapling"},
+	name = "hades_oak:convert_oak_saplings_to_node_timer",
+	nodenames = {"hades_oak:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1, 1))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"oak:trunk"},
-	leaves = {"oak:leaves"},
+	trunks = {"hades_oak:trunk"},
+	leaves = {"hades_oak:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"oak_trunk",
-		"oak:trunk",
+		"hades_oak:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"oak_wood.png"},
 		S("Oak Stair"),
+		S("Outer Oak Stair"),
+		S("Inner Oak Stair"),
 		S("Oak Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"oak:sapling", grow_new_oak_tree, "soil"},
+		{"hades_oak:sapling", grow_new_oak_tree, "soil"},
 	})
 end
 
@@ -237,9 +241,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "oak_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"oak:wood", "oak:wood"},
-				{"oak:wood", "oak:wood"},
-				{"oak:wood", "oak:wood"},
+				{"hades_oak:wood", "hades_oak:wood"},
+				{"hades_oak:wood", "hades_oak:wood"},
+				{"hades_oak:wood", "hades_oak:wood"},
 			}
 	})
 end

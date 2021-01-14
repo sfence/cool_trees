@@ -53,7 +53,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("mahogany:sapling", {
+minetest.register_node("hades_mahogany:sapling", {
 	description = S("Mahogany Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"mahogany_sapling.png"},
@@ -69,7 +69,7 @@ minetest.register_node("mahogany:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -77,7 +77,7 @@ minetest.register_node("mahogany:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"mahogany:sapling",
+			"hades_mahogany:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -89,7 +89,7 @@ minetest.register_node("mahogany:sapling", {
 	end,
 })
 
-minetest.register_node("mahogany:trunk", {
+minetest.register_node("hades_mahogany:trunk", {
 	description = S("Mahogany Trunk"),
 	tiles = {
 		"mahogany_trunk_top.png",
@@ -97,25 +97,25 @@ minetest.register_node("mahogany:trunk", {
 		"mahogany_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
 })
 
 -- mahogany wood
-minetest.register_node("mahogany:wood", {
+minetest.register_node("hades_mahogany:wood", {
 	description = S("Mahogany Wood"),
 	tiles = {"mahogany_wood.png"},
 	paramtype2 = "facedir",
 	place_param2 = 0,
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- mahogany tree leaves
-minetest.register_node("mahogany:leaves", {
+minetest.register_node("hades_mahogany:leaves", {
 	description = S("Mahogany Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"mahogany_leaves.png"},
@@ -128,11 +128,11 @@ minetest.register_node("mahogany:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"mahogany:sapling"}, rarity = 20},
-			{items = {"mahogany:leaves"}}
+			{items = {"hades_mahogany:sapling"}, rarity = 20},
+			{items = {"hades_mahogany:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -140,7 +140,7 @@ minetest.register_node("mahogany:leaves", {
 -- Creeper/Vines...
 --
 
-minetest.register_node("mahogany:creeper", {
+minetest.register_node("hades_mahogany:creeper", {
 	description = S("Mahogany Creeper"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -157,10 +157,10 @@ minetest.register_node("mahogany:creeper", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("mahogany:flower_creeper", {
+minetest.register_node("hades_mahogany:flower_creeper", {
 	description = S("Mahogany Flower Creeper"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -177,10 +177,10 @@ minetest.register_node("mahogany:flower_creeper", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1, falling_node = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("mahogany:hanging_creeper", {
+minetest.register_node("hades_mahogany:hanging_creeper", {
 	description = S("Mahogany Hanging Creeper"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -197,7 +197,7 @@ minetest.register_node("mahogany:hanging_creeper", {
 	groups = {
 		snappy = 2, flammable = 3, oddly_breakable_by_hand = 3, choppy = 2, carpet = 1, leafdecay = 3, leaves = 1, falling_node = 1
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
 --
@@ -209,48 +209,52 @@ minetest.register_node("mahogany:hanging_creeper", {
 --
 
 minetest.register_craft({
-	output = "mahogany:wood 4",
-	recipe = {{"mahogany:trunk"}}
+	output = "hades_mahogany:wood 4",
+	recipe = {{"hades_mahogany:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "mahogany:trunk",
+	recipe = "hades_mahogany:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "mahogany:wood",
+	recipe = "hades_mahogany:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "mahogany:convert_mahogany_saplings_to_node_timer",
-	nodenames = {"mahogany:sapling"},
+	name = "hades_mahogany:convert_mahogany_saplings_to_node_timer",
+	nodenames = {"hades_mahogany:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"mahogany:trunk"},
-	leaves = {"mahogany:leaves"},
+	trunks = {"hades_mahogany:trunk"},
+	leaves = {"hades_mahogany:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"mahogany_trunk",
-		"mahogany:trunk",
+		"hades_mahogany:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"mahogany_wood.png"},
 		S("Mahogany Stair"),
+		S("Outer Mahogany Stair"),
+		S("Inner Mahogany Stair"),
 		S("Mahogany Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
@@ -258,6 +262,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"mahogany:sapling", grow_new_mahogany_tree, "soil"},
+		{"hades_mahogany:sapling", grow_new_mahogany_tree, "soil"},
 	})
 end

@@ -9,7 +9,7 @@ local mg_name = minetest.get_mapgen_setting("mg_name")
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
-minetest.register_node("clementinetree:clementine", {
+minetest.register_node("hades_clementinetree:clementine", {
 	description = S("Clementine"),
 	drawtype = "plantlike",
 	tiles = {"clementinetree_clementine.png"},
@@ -25,10 +25,10 @@ minetest.register_node("clementinetree:clementine", {
 	groups = {fleshy = 3, dig_immediate = 3, flammable = 2,
 		leafdecay = 3, leafdecay_drop = 1},
 	on_use = minetest.item_eat(2),
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "clementinetree:clementine", param2 = 1})
+		minetest.set_node(pos, {name = "hades_clementinetree:clementine", param2 = 1})
 	end,
 })
 
@@ -74,7 +74,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("clementinetree:sapling", {
+minetest.register_node("hades_clementinetree:sapling", {
 	description = S("Clementine Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"clementinetree_sapling.png"},
@@ -90,7 +90,7 @@ minetest.register_node("clementinetree:sapling", {
 	},
 	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
 		attached_node = 1, sapling = 1},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
 		minetest.get_node_timer(pos):start(math.random(2400,4800))
@@ -98,7 +98,7 @@ minetest.register_node("clementinetree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"clementinetree:sapling",
+			"hades_clementinetree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -110,7 +110,7 @@ minetest.register_node("clementinetree:sapling", {
 	end,
 })
 
-minetest.register_node("clementinetree:trunk", {
+minetest.register_node("hades_clementinetree:trunk", {
 	description = S("Clementine Tree Trunk"),
 	tiles = {
 		"clementinetree_trunk_top.png",
@@ -118,22 +118,22 @@ minetest.register_node("clementinetree:trunk", {
 		"clementinetree_trunk.png"
 	},
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 })
 
 -- clementinetree wood
-minetest.register_node("clementinetree:wood", {
+minetest.register_node("hades_clementinetree:wood", {
 	description = S("Clementine Tree Wood"),
 	tiles = {"clementinetree_wood.png"},
 	is_ground_content = false,
 	groups = {wood = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = hades_sounds.node_sound_wood_defaults(),
 })
 
 -- clementinetree tree leaves
-minetest.register_node("clementinetree:leaves", {
+minetest.register_node("hades_clementinetree:leaves", {
 	description = S("Clementine Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"clementinetree_leaves.png"},
@@ -146,11 +146,11 @@ minetest.register_node("clementinetree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"clementinetree:sapling"}, rarity = 20},
-			{items = {"clementinetree:leaves"}}
+			{items = {"hades_clementinetree:sapling"}, rarity = 20},
+			{items = {"hades_clementinetree:leaves"}}
 		}
 	},
-	sounds = default.node_sound_leaves_defaults(),
+	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
@@ -163,54 +163,58 @@ minetest.register_node("clementinetree:leaves", {
 --
 
 minetest.register_craft({
-	output = "clementinetree:wood 4",
-	recipe = {{"clementinetree:trunk"}}
+	output = "hades_clementinetree:wood 4",
+	recipe = {{"hades_clementinetree:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "clementinetree:trunk",
+	recipe = "hades_clementinetree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "clementinetree:wood",
+	recipe = "hades_clementinetree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "clementinetree:convert_clementinetree_saplings_to_node_timer",
-	nodenames = {"clementinetree:sapling"},
+	name = "hades_clementinetree:convert_clementinetree_saplings_to_node_timer",
+	nodenames = {"hades_clementinetree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
+--[[
 default.register_leafdecay({
-	trunks = {"clementinetree:trunk"},
-	leaves = {"clementinetree:leaves"},
+	trunks = {"hades_clementinetree:trunk"},
+	leaves = {"hades_clementinetree:leaves"},
 	radius = 3,
 })
+--]]
 
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"clementinetree_trunk",
-		"clementinetree:trunk",
+		"hades_clementinetree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"clementinetree_wood.png"},
 		S("Clementine Tree Stair"),
+		S("Outer Clementine Tree Stair"),
+		S("Inner Clementine Tree Stair"),
 		S("Clementine Tree Slab"),
-		default.node_sound_wood_defaults()
+		hades_sounds.node_sound_wood_defaults()
 	)
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"clementinetree:sapling", grow_new_clementinetree_tree, "soil"},
+		{"hades_clementinetree:sapling", grow_new_clementinetree_tree, "soil"},
 	})
 end
 
@@ -224,9 +228,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "clementinetree_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"clementinetree:wood", "clementinetree:wood"},
-				{"clementinetree:wood", "clementinetree:wood"},
-				{"clementinetree:wood", "clementinetree:wood"},
+				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
+				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
+				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
 			}
 	})
 end
