@@ -1,0 +1,4 @@
+
+# Enable use of cubic round  cool tree trunks, for make them look more cool.
+cool_trees_round_trunk (Enable round trunk in cool trees modpack) bool false
+

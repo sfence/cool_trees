@@ -100,6 +100,23 @@ minetest.register_node("jacaranda:trunk", {
 	on_place = minetest.rotate_node,
 })
 
+if minetest.settings:get_bool("cool_trees_round_trunk", false) then
+  minetest.override_item("jacaranda:trunk",{
+    paramtype = "light",
+    drawtype = "nodebox",
+    node_box = {
+      type = "fixed",
+      fixed = {
+        {-0.5,-0.5,-3/16, 0.5,0.5,3/16},
+        {-7/16,-0.5,-5/16, 7/16,0.5,5/16},
+        {-6/16,-0.5,-6/16, 6/16,0.5,6/16},
+        {-5/16,-0.5,-7/16, 5/16,0.5,7/16},
+        {-3/16,-0.5,-0.5, 3/16,0.5,0.5},
+      },
+    },
+  })
+end
+
 -- jacaranda wood
 minetest.register_node("jacaranda:wood", {
 	description = S("Jacaranda Wood"),
