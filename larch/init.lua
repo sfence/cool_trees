@@ -2,7 +2,7 @@
 -- Larch
 --
 local modname = "larch"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
@@ -51,7 +51,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_larch:sapling", {
+minetest.register_node(":larch:sapling", {
 	description = S("Larch Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"larch_sapling.png"},
@@ -75,7 +75,7 @@ minetest.register_node("hades_larch:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_larch:sapling",
+			"larch:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -87,7 +87,7 @@ minetest.register_node("hades_larch:sapling", {
 	end,
 })
 
-minetest.register_node("hades_larch:trunk", {
+minetest.register_node(":larch:trunk", {
 	description = S("Larch Trunk"),
 	tiles = {
 		"larch_trunk_top.png",
@@ -102,7 +102,7 @@ minetest.register_node("hades_larch:trunk", {
 })
 
 -- larch wood
-minetest.register_node("hades_larch:wood", {
+minetest.register_node(":larch:wood", {
 	description = S("Larch Wood"),
 	tiles = {"larch_wood.png"},
 	paramtype2 = "facedir",
@@ -113,7 +113,7 @@ minetest.register_node("hades_larch:wood", {
 })
 
 -- larch tree leaves
-minetest.register_node("hades_larch:leaves", {
+minetest.register_node(":larch:leaves", {
 	description = S("Larch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"larch_leaves.png"},
@@ -126,15 +126,15 @@ minetest.register_node("hades_larch:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_larch:sapling"}, rarity = 20},
-			{items = {"hades_larch:leaves"}}
+			{items = {"larch:sapling"}, rarity = 20},
+			{items = {"larch:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
-minetest.register_node("hades_larch:moss", {
+minetest.register_node(":larch:moss", {
 	description = S("Larch Moss"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -164,27 +164,27 @@ minetest.register_node("hades_larch:moss", {
 --
 
 minetest.register_craft({
-	output = "hades_larch:wood 4",
-	recipe = {{"hades_larch:trunk"}}
+	output = "larch:wood 4",
+	recipe = {{"larch:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_larch:trunk",
+	recipe = "larch:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_larch:wood",
+	recipe = "larch:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_larch:convert_larch_saplings_to_node_timer",
-	nodenames = {"hades_larch:sapling"},
+	name = ":larch:convert_larch_saplings_to_node_timer",
+	nodenames = {"larch:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -192,8 +192,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_larch:trunk"},
-	leaves = {"hades_larch:leaves"},
+	trunks = {"larch:trunk"},
+	leaves = {"larch:leaves"},
 	radius = 3,
 })
 --]]
@@ -203,7 +203,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"larch_trunk",
-		"hades_larch:trunk",
+		"larch:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"larch_wood.png"},
 		S("Larch Tree Stair"),
@@ -216,7 +216,7 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_larch:sapling", grow_new_larch_tree, "soil"},
+		{"larch:sapling", grow_new_larch_tree, "soil"},
 	})
 end
 
@@ -229,9 +229,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "larch_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"hades_larch:wood", "hades_larch:wood"},
-				{"hades_larch:wood", "hades_larch:wood"},
-				{"hades_larch:wood", "hades_larch:wood"},
+				{"larch:wood", "larch:wood"},
+				{"larch:wood", "larch:wood"},
+				{"larch:wood", "larch:wood"},
 			}
 	})
 end

@@ -2,7 +2,7 @@
 -- Cherrytree
 --
 local modname = "cherrytree"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 local fruit_grow_time = 1200
 
@@ -11,7 +11,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Cherry Fruit
 
-minetest.register_node("hades_cherrytree:cherries", {
+minetest.register_node(":cherrytree:cherries", {
 	description = S("Cherries"),
 	drawtype = "plantlike",
 	tiles = {"cherrytree_cherries.png"},
@@ -30,20 +30,20 @@ minetest.register_node("hades_cherrytree:cherries", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "hades_cherrytree:cherries", param2 = 1})
+		minetest.set_node(pos, {name = ":cherrytree:cherries", param2 = 1})
 	end,
 
 	on_dig = function(pos, node, digger)
 		if digger:is_player() then
 			local inv = digger:get_inventory()
-			if inv:room_for_item("main", "hades_cherrytree:cherries") then
-				inv:add_item("main", "hades_cherrytree:cherries")
+			if inv:room_for_item("main", "cherrytree:cherries") then
+				inv:add_item("main", "cherrytree:cherries")
 			end
 		end
 		minetest.remove_node(pos)
 		pos.y = pos.y + 1
 		local node_above = minetest.get_node_or_nil(pos)
-		if node_above and node_above.param2 == 0 and node_above.name == "hades_cherrytree:blossom_leaves" then
+		if node_above and node_above.param2 == 0 and node_above.name == "cherrytree:blossom_leaves" then
 			--20% of variation on time
 			local twenty_percent = fruit_grow_time * 0.2
 			local grow_time = math.random(fruit_grow_time - twenty_percent, fruit_grow_time + twenty_percent)
@@ -94,7 +94,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_cherrytree:sapling", {
+minetest.register_node(":cherrytree:sapling", {
 	description = S("Cherrytree Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"cherrytree_sapling.png"},
@@ -118,7 +118,7 @@ minetest.register_node("hades_cherrytree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_cherrytree:sapling",
+			"cherrytree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -130,7 +130,7 @@ minetest.register_node("hades_cherrytree:sapling", {
 	end,
 })
 
-minetest.register_node("hades_cherrytree:trunk", {
+minetest.register_node(":cherrytree:trunk", {
 	description = S("Cherrytree Trunk"),
 	tiles = {
 		"cherrytree_trunk_top.png",
@@ -145,7 +145,7 @@ minetest.register_node("hades_cherrytree:trunk", {
 })
 
 -- cherrytree wood
-minetest.register_node("hades_cherrytree:wood", {
+minetest.register_node(":cherrytree:wood", {
 	description = S("Cherrytree Wood"),
 	tiles = {"cherrytree_wood.png"},
 	paramtype2 = "facedir",
@@ -156,7 +156,7 @@ minetest.register_node("hades_cherrytree:wood", {
 })
 
 -- cherrytree tree leaves
-minetest.register_node("hades_cherrytree:blossom_leaves", {
+minetest.register_node(":cherrytree:blossom_leaves", {
 	description = S("Cherrytree Blossom Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"cherrytree_blossom_leaves.png"},
@@ -169,8 +169,8 @@ minetest.register_node("hades_cherrytree:blossom_leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_cherrytree:sapling"}, rarity = 20},
-			{items = {"hades_cherrytree:blossom_leaves"}}
+			{items = {"cherrytree:sapling"}, rarity = 20},
+			{items = {"cherrytree:blossom_leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -180,7 +180,7 @@ minetest.register_node("hades_cherrytree:blossom_leaves", {
 		pos.y = pos.y - 1
 		local node = minetest.get_node_or_nil(pos)
 		if node and node.name == "air" then
-			minetest.set_node(pos, {name = "hades_cherrytree:cherries"})
+			minetest.set_node(pos, {name = ":cherrytree:cherries"})
 			return false
 		else
 			return true
@@ -189,7 +189,7 @@ minetest.register_node("hades_cherrytree:blossom_leaves", {
 })
 
 -- cherrytree tree leaves
-minetest.register_node("hades_cherrytree:leaves", {
+minetest.register_node(":cherrytree:leaves", {
 	description = S("Cherrytree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"cherrytree_leaves.png"},
@@ -202,8 +202,8 @@ minetest.register_node("hades_cherrytree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_cherrytree:sapling"}, rarity = 20},
-			{items = {"hades_cherrytree:leaves"}}
+			{items = {"cherrytree:sapling"}, rarity = 20},
+			{items = {"cherrytree:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -219,27 +219,27 @@ minetest.register_node("hades_cherrytree:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_cherrytree:wood 4",
-	recipe = {{"hades_cherrytree:trunk"}}
+	output = "cherrytree:wood 4",
+	recipe = {{"cherrytree:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_cherrytree:trunk",
+	recipe = "cherrytree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_cherrytree:wood",
+	recipe = "cherrytree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_cherrytree:convert_cherrytree_saplings_to_node_timer",
-	nodenames = {"hades_cherrytree:sapling"},
+	name = ":cherrytree:convert_cherrytree_saplings_to_node_timer",
+	nodenames = {"cherrytree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -247,8 +247,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_cherrytree:trunk"},
-	leaves = {"hades_cherrytree:leaves"},
+	trunks = {"cherrytree:trunk"},
+	leaves = {"cherrytree:leaves"},
 	radius = 3,
 })
 --]]
@@ -258,7 +258,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"cherrytree_trunk",
-		"hades_cherrytree:trunk",
+		"cherrytree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"cherrytree_wood.png"},
 		S("Cherry Tree Stair"),
@@ -273,6 +273,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_cherrytree:sapling", grow_new_cherrytree_tree, "soil"},
+		{"cherrytree:sapling", grow_new_cherrytree_tree, "soil"},
 	})
 end

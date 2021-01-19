@@ -3,13 +3,13 @@
 --
 
 local modname = "clementinetree"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
-minetest.register_node("hades_clementinetree:clementine", {
+minetest.register_node(":clementinetree:clementine", {
 	description = S("Clementine"),
 	drawtype = "plantlike",
 	tiles = {"clementinetree_clementine.png"},
@@ -28,7 +28,7 @@ minetest.register_node("hades_clementinetree:clementine", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "hades_clementinetree:clementine", param2 = 1})
+		minetest.set_node(pos, {name = ":clementinetree:clementine", param2 = 1})
 	end,
 })
 
@@ -74,7 +74,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_clementinetree:sapling", {
+minetest.register_node(":clementinetree:sapling", {
 	description = S("Clementine Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"clementinetree_sapling.png"},
@@ -98,7 +98,7 @@ minetest.register_node("hades_clementinetree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_clementinetree:sapling",
+			"clementinetree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -110,7 +110,7 @@ minetest.register_node("hades_clementinetree:sapling", {
 	end,
 })
 
-minetest.register_node("hades_clementinetree:trunk", {
+minetest.register_node(":clementinetree:trunk", {
 	description = S("Clementine Tree Trunk"),
 	tiles = {
 		"clementinetree_trunk_top.png",
@@ -124,7 +124,7 @@ minetest.register_node("hades_clementinetree:trunk", {
 })
 
 -- clementinetree wood
-minetest.register_node("hades_clementinetree:wood", {
+minetest.register_node(":clementinetree:wood", {
 	description = S("Clementine Tree Wood"),
 	tiles = {"clementinetree_wood.png"},
 	is_ground_content = false,
@@ -133,7 +133,7 @@ minetest.register_node("hades_clementinetree:wood", {
 })
 
 -- clementinetree tree leaves
-minetest.register_node("hades_clementinetree:leaves", {
+minetest.register_node(":clementinetree:leaves", {
 	description = S("Clementine Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"clementinetree_leaves.png"},
@@ -146,8 +146,8 @@ minetest.register_node("hades_clementinetree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_clementinetree:sapling"}, rarity = 20},
-			{items = {"hades_clementinetree:leaves"}}
+			{items = {"clementinetree:sapling"}, rarity = 20},
+			{items = {"clementinetree:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -163,26 +163,26 @@ minetest.register_node("hades_clementinetree:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_clementinetree:wood 4",
-	recipe = {{"hades_clementinetree:trunk"}}
+	output = "clementinetree:wood 4",
+	recipe = {{"clementinetree:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_clementinetree:trunk",
+	recipe = "clementinetree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_clementinetree:wood",
+	recipe = "clementinetree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_clementinetree:convert_clementinetree_saplings_to_node_timer",
-	nodenames = {"hades_clementinetree:sapling"},
+	name = ":clementinetree:convert_clementinetree_saplings_to_node_timer",
+	nodenames = {"clementinetree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -190,8 +190,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_clementinetree:trunk"},
-	leaves = {"hades_clementinetree:leaves"},
+	trunks = {"clementinetree:trunk"},
+	leaves = {"clementinetree:leaves"},
 	radius = 3,
 })
 --]]
@@ -201,7 +201,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"clementinetree_trunk",
-		"hades_clementinetree:trunk",
+		"clementinetree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"clementinetree_wood.png"},
 		S("Clementine Tree Stair"),
@@ -214,7 +214,7 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_clementinetree:sapling", grow_new_clementinetree_tree, "soil"},
+		{"clementinetree:sapling", grow_new_clementinetree_tree, "soil"},
 	})
 end
 
@@ -228,9 +228,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "clementinetree_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
-				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
-				{"hades_clementinetree:wood", "hades_clementinetree:wood"},
+				{"clementinetree:wood", "clementinetree:wood"},
+				{"clementinetree:wood", "clementinetree:wood"},
+				{"clementinetree:wood", "clementinetree:wood"},
 			}
 	})
 end

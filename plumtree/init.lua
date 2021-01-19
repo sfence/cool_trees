@@ -2,7 +2,7 @@
 -- Plumtree
 --
 local modname = "plumtree"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 local fruit_grow_time = 1200
 
@@ -11,7 +11,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 -- Plum Fruit
 
-minetest.register_node("hades_plumtree:plum", {
+minetest.register_node(":plumtree:plum", {
 	description = S("Plum"),
 	drawtype = "plantlike",
 	tiles = {"plumtree_plum.png"},
@@ -30,20 +30,20 @@ minetest.register_node("hades_plumtree:plum", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "hades_plumtree:plum", param2 = 1})
+		minetest.set_node(pos, {name = ":plumtree:plum", param2 = 1})
 	end,
 
 	on_dig = function(pos, node, digger)
 		if digger:is_player() then
 			local inv = digger:get_inventory()
-			if inv:room_for_item("main", "hades_plumtree:plum") then
-				inv:add_item("main", "hades_plumtree:plum")
+			if inv:room_for_item("main", "plumtree:plum") then
+				inv:add_item("main", "plumtree:plum")
 			end
 		end
 		minetest.remove_node(pos)
 		pos.y = pos.y + 1
 		local node_above = minetest.get_node_or_nil(pos)
-		if node_above and node_above.param2 == 0 and node_above.name == "hades_plumtree:blossom_leaves" then
+		if node_above and node_above.param2 == 0 and node_above.name == "plumtree:blossom_leaves" then
 			--20% of variation on time
 			local twenty_percent = fruit_grow_time * 0.2
 			local grow_time = math.random(fruit_grow_time - twenty_percent, fruit_grow_time + twenty_percent)
@@ -112,7 +112,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_plumtree:sapling", {
+minetest.register_node(":plumtree:sapling", {
 	description = S("Plumtree Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"plumtree_sapling.png"},
@@ -136,7 +136,7 @@ minetest.register_node("hades_plumtree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_plumtree:sapling",
+			"plumtree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -148,7 +148,7 @@ minetest.register_node("hades_plumtree:sapling", {
 	end,
 })
 
-minetest.register_node("hades_plumtree:trunk", {
+minetest.register_node(":plumtree:trunk", {
 	description = S("Plumtree Trunk"),
 	tiles = {
 		"plumtree_trunk_top.png",
@@ -163,7 +163,7 @@ minetest.register_node("hades_plumtree:trunk", {
 })
 
 -- plumtree wood
-minetest.register_node("hades_plumtree:wood", {
+minetest.register_node(":plumtree:wood", {
 	description = S("Plumtree Wood"),
 	tiles = {"plumtree_wood.png"},
 	paramtype2 = "facedir",
@@ -175,7 +175,7 @@ minetest.register_node("hades_plumtree:wood", {
 
 
 -- plumtree tree leaves
-minetest.register_node("hades_plumtree:leaves", {
+minetest.register_node(":plumtree:leaves", {
 	description = S("Plumtree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"plumtree_leaves.png"},
@@ -188,8 +188,8 @@ minetest.register_node("hades_plumtree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_plumtree:sapling"}, rarity = 20},
-			{items = {"hades_plumtree:leaves"}}
+			{items = {"plumtree:sapling"}, rarity = 20},
+			{items = {"plumtree:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -205,27 +205,27 @@ minetest.register_node("hades_plumtree:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_plumtree:wood 4",
-	recipe = {{"hades_plumtree:trunk"}}
+	output = "plumtree:wood 4",
+	recipe = {{"plumtree:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_plumtree:trunk",
+	recipe = "plumtree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_plumtree:wood",
+	recipe = "plumtree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_plumtree:convert_plumtree_saplings_to_node_timer",
-	nodenames = {"hades_plumtree:sapling"},
+	name = ":plumtree:convert_plumtree_saplings_to_node_timer",
+	nodenames = {"plumtree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -233,8 +233,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_plumtree:trunk"},
-	leaves = {"hades_plumtree:leaves"},
+	trunks = {"plumtree:trunk"},
+	leaves = {"plumtree:leaves"},
 	radius = 3,
 })
 --]]
@@ -244,7 +244,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"plumtree_trunk",
-		"hades_plumtree:trunk",
+		"plumtree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"plumtree_wood.png"},
 		S("Plum Tree Stair"),
@@ -259,6 +259,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_plumtree:sapling", grow_new_plumtree_tree, "soil"},
+		{"plumtree:sapling", grow_new_plumtree_tree, "soil"},
 	})
 end

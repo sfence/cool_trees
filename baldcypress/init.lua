@@ -1,12 +1,12 @@
 --
 -- Bald Cypress
 --
-local modname = "baldcypress"
-local modpath = minetest.get_modpath(modname)
+local modname = ":baldcypress"
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
-local S = minetest.get_translator(minetest.get_current_modname())
+local S = minetest.get_translator(modname)
 
 -- Bald Cypress
 
@@ -51,7 +51,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_baldcypress:sapling", {
+minetest.register_node(":baldcypress:sapling", {
 	description = S("Bald Cypress Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"baldcypress_sapling.png"},
@@ -75,7 +75,7 @@ minetest.register_node("hades_baldcypress:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_baldcypress:sapling",
+			"baldcypress:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -87,7 +87,7 @@ minetest.register_node("hades_baldcypress:sapling", {
 	end,
 })
 
-minetest.register_node("hades_baldcypress:trunk", {
+minetest.register_node(":baldcypress:trunk", {
 	description = S("Bald Cypress Trunk"),
 	tiles = {
 		"baldcypress_trunk_top.png",
@@ -102,7 +102,7 @@ minetest.register_node("hades_baldcypress:trunk", {
 })
 
 -- baldcypress wood
-minetest.register_node("hades_baldcypress:wood", {
+minetest.register_node(":baldcypress:wood", {
 	description = S("Bald Cypress Wood"),
 	tiles = {"baldcypress_wood.png"},
 	paramtype2 = "facedir",
@@ -113,7 +113,7 @@ minetest.register_node("hades_baldcypress:wood", {
 })
 
 -- baldcypress tree leaves
-minetest.register_node("hades_baldcypress:leaves", {
+minetest.register_node(":baldcypress:leaves", {
 	description = S("Bald Cypress Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"baldcypress_leaves.png"},
@@ -126,15 +126,15 @@ minetest.register_node("hades_baldcypress:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_baldcypress:sapling"}, rarity = 20},
-			{items = {"hades_baldcypress:leaves"}}
+			{items = {"baldcypress:sapling"}, rarity = 20},
+			{items = {"baldcypress:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 })
 
-minetest.register_node("hades_baldcypress:dry_branches", {
+minetest.register_node(":baldcypress:dry_branches", {
 	description = S("Bald Cypress Dry Branches"),
 	drawtype = "nodebox",
 	walkable = true,
@@ -154,7 +154,7 @@ minetest.register_node("hades_baldcypress:dry_branches", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 })
 
-minetest.register_node("hades_baldcypress:liana", {
+minetest.register_node(":baldcypress:liana", {
 	description = S("Bald Cypress Liana"),
 	drawtype = "nodebox",
 	walkable = false,
@@ -184,27 +184,27 @@ minetest.register_node("hades_baldcypress:liana", {
 --
 
 minetest.register_craft({
-	output = "hades_baldcypress:wood 4",
-	recipe = {{"hades_baldcypress:trunk"}}
+	output = "baldcypress:wood 4",
+	recipe = {{"baldcypress:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_baldcypress:trunk",
+	recipe = "baldcypress:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_baldcypress:wood",
+	recipe = "baldcypress:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_baldcypress:convert_baldcypress_saplings_to_node_timer",
-	nodenames = {"hades_baldcypress:sapling"},
+	name = "::baldcypress:convert_baldcypress_saplings_to_node_timer",
+	nodenames = {"baldcypress:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -212,8 +212,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_baldcypress:trunk"},
-	leaves = {"hades_baldcypress:leaves"},
+	trunks = {"baldcypress:trunk"},
+	leaves = {"baldcypress:leaves"},
 	radius = 3,
 })
 --]]
@@ -223,7 +223,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"baldcypress_trunk",
-		"hades_baldcypress:trunk",
+		"baldcypress:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"baldcypress_wood.png"},
 		S("Bald Cypress Stair"),
@@ -238,6 +238,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_baldcypress:sapling", grow_new_baldcypress_tree, "soil"},
+		{"baldcypress:sapling", grow_new_baldcypress_tree, "soil"},
 	})
 end

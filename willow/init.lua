@@ -3,7 +3,7 @@
 --
 
 local modname = "willow"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
@@ -52,7 +52,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_willow:sapling", {
+minetest.register_node(":willow:sapling", {
 	description = S("Willow Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"willow_sapling.png"},
@@ -76,7 +76,7 @@ minetest.register_node("hades_willow:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_willow:sapling",
+			"willow:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -88,7 +88,7 @@ minetest.register_node("hades_willow:sapling", {
 	end,
 })
 
-minetest.register_node("hades_willow:trunk", {
+minetest.register_node(":willow:trunk", {
 	description = S("Willow Trunk"),
 	tiles = {
 		"willow_trunk_top.png",
@@ -103,7 +103,7 @@ minetest.register_node("hades_willow:trunk", {
 })
 
 -- willow wood
-minetest.register_node("hades_willow:wood", {
+minetest.register_node(":willow:wood", {
 	description = S("Willow Wood"),
 	tiles = {"willow_wood.png"},
 	paramtype2 = "facedir",
@@ -114,7 +114,7 @@ minetest.register_node("hades_willow:wood", {
 })
 
 -- willow tree leaves
-minetest.register_node("hades_willow:leaves", {
+minetest.register_node(":willow:leaves", {
 	description = S("Willow Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"willow_leaves.png"},
@@ -127,8 +127,8 @@ minetest.register_node("hades_willow:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_willow:sapling"}, rarity = 20},
-			{items = {"hades_willow:leaves"}}
+			{items = {"willow:sapling"}, rarity = 20},
+			{items = {"willow:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -144,26 +144,26 @@ minetest.register_node("hades_willow:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_willow:wood 4",
-	recipe = {{"hades_willow:trunk"}}
+	output = "willow:wood 4",
+	recipe = {{"willow:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_willow:trunk",
+	recipe = "willow:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_willow:wood",
+	recipe = "willow:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_willow:convert_willow_saplings_to_node_timer",
-	nodenames = {"hades_willow:sapling"},
+	name = ":willow:convert_willow_saplings_to_node_timer",
+	nodenames = {"willow:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -171,8 +171,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_willow:trunk"},
-	leaves = {"hades_willow:leaves"},
+	trunks = {"willow:trunk"},
+	leaves = {"willow:leaves"},
 	radius = 3,
 })
 --]]
@@ -182,7 +182,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"willow_trunk",
-		"hades_willow:trunk",
+		"willow:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"willow_wood.png"},
 		S("Willow Stair"),
@@ -195,6 +195,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_willow:sapling", grow_new_willow_tree, "soil"},
+		{"willow:sapling", grow_new_willow_tree, "soil"},
 	})
 end

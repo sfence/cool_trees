@@ -2,7 +2,7 @@
 -- Jacaranda
 --
 local modname = "jacaranda"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
@@ -50,7 +50,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_jacaranda:sapling", {
+minetest.register_node(":jacaranda:sapling", {
 	description = S("Jacaranda Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"jacaranda_sapling.png"},
@@ -74,7 +74,7 @@ minetest.register_node("hades_jacaranda:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_jacaranda:sapling",
+			"jacaranda:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -86,7 +86,7 @@ minetest.register_node("hades_jacaranda:sapling", {
 	end,
 })
 
-minetest.register_node("hades_jacaranda:trunk", {
+minetest.register_node(":jacaranda:trunk", {
 	description = S("Jacaranda Trunk"),
 	tiles = {
 		"jacaranda_trunk_top.png",
@@ -101,7 +101,7 @@ minetest.register_node("hades_jacaranda:trunk", {
 })
 
 -- jacaranda wood
-minetest.register_node("hades_jacaranda:wood", {
+minetest.register_node(":jacaranda:wood", {
 	description = S("Jacaranda Wood"),
 	tiles = {"jacaranda_wood.png"},
 	paramtype2 = "facedir",
@@ -112,7 +112,7 @@ minetest.register_node("hades_jacaranda:wood", {
 })
 
 -- jacaranda tree leaves
-minetest.register_node("hades_jacaranda:blossom_leaves", {
+minetest.register_node(":jacaranda:blossom_leaves", {
 	description = S("Jacaranda Blossom Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"jacaranda_blossom_leaves.png"},
@@ -125,8 +125,8 @@ minetest.register_node("hades_jacaranda:blossom_leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_jacaranda:sapling"}, rarity = 20},
-			{items = {"hades_jacaranda:blossom_leaves"}}
+			{items = {"jacaranda:sapling"}, rarity = 20},
+			{items = {"jacaranda:blossom_leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -142,27 +142,27 @@ minetest.register_node("hades_jacaranda:blossom_leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_jacaranda:wood 4",
-	recipe = {{"hades_jacaranda:trunk"}}
+	output = "jacaranda:wood 4",
+	recipe = {{"jacaranda:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_jacaranda:trunk",
+	recipe = "jacaranda:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_jacaranda:wood",
+	recipe = "jacaranda:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_jacaranda:convert_jacaranda_saplings_to_node_timer",
-	nodenames = {"hades_jacaranda:sapling"},
+	name = ":jacaranda:convert_jacaranda_saplings_to_node_timer",
+	nodenames = {"jacaranda:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -170,8 +170,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_jacaranda:trunk"},
-	leaves = {"hades_jacaranda:blossom_leaves"},
+	trunks = {"jacaranda:trunk"},
+	leaves = {"jacaranda:blossom_leaves"},
 	radius = 3,
 })
 --]]
@@ -181,7 +181,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"jacaranda_trunk",
-		"hades_jacaranda:trunk",
+		"jacaranda:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"jacaranda_wood.png"},
 		S("Jacaranda Tree Stair"),
@@ -194,7 +194,7 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_jacaranda:sapling", grow_new_jacaranda_tree, "soil"},
+		{"jacaranda:sapling", grow_new_jacaranda_tree, "soil"},
 	})
 end
 

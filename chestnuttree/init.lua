@@ -3,7 +3,7 @@
 --
 
 local modname = "chestnuttree"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
@@ -11,7 +11,7 @@ local S = minetest.get_translator(minetest.get_current_modname())
 
 --Chesnut Bur
 
-minetest.register_node("hades_chestnuttree:bur", {
+minetest.register_node(":chestnuttree:bur", {
 	description = S("Chestnut Bur"),
 	drawtype = "plantlike",
 	tiles = {"chestnuttree_bur.png"},
@@ -30,21 +30,21 @@ minetest.register_node("hades_chestnuttree:bur", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = "hades_chestnuttree:bur", param2 = 1})
+		minetest.set_node(pos, {name = ":chestnuttree:bur", param2 = 1})
 	end,
 })
 
 --Chesnut Fruit
 
-minetest.register_craftitem("hades_chestnuttree:fruit", {
+minetest.register_craftitem(":chestnuttree:fruit", {
 	description = S("Chestnut"),
 	inventory_image = "chestnuttree_fruit.png",
 	on_use = minetest.item_eat(2),
-	groups = {flammable = 2, food = 2},
+	groups = {flammable = 2, food = 2, eatable = 2},
 })
 
 minetest.register_craft({
-	output = "hades_chestnuttree:fruit",
+	output = "chestnuttree:fruit",
 	recipe = {
 		{'hades_chestnuttree:bur'}
 	}
@@ -111,7 +111,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_chestnuttree:sapling", {
+minetest.register_node(":chestnuttree:sapling", {
 	description = S("Chestnut Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"chestnuttree_sapling.png"},
@@ -135,7 +135,7 @@ minetest.register_node("hades_chestnuttree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_chestnuttree:sapling",
+			"chestnuttree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -147,7 +147,7 @@ minetest.register_node("hades_chestnuttree:sapling", {
 	end,
 })
 
-minetest.register_node("hades_chestnuttree:trunk", {
+minetest.register_node(":chestnuttree:trunk", {
 	description = S("Chestnut Tree Trunk"),
 	tiles = {
 		"chestnuttree_trunk_top.png",
@@ -161,7 +161,7 @@ minetest.register_node("hades_chestnuttree:trunk", {
 })
 
 -- chestnuttree wood
-minetest.register_node("hades_chestnuttree:wood", {
+minetest.register_node(":chestnuttree:wood", {
 	description = S("Chestnut Tree Wood"),
 	tiles = {"chestnuttree_wood.png"},
 	is_ground_content = false,
@@ -170,7 +170,7 @@ minetest.register_node("hades_chestnuttree:wood", {
 })
 
 -- chestnuttree tree leaves
-minetest.register_node("hades_chestnuttree:leaves", {
+minetest.register_node(":chestnuttree:leaves", {
 	description = S("Chestnut Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"chestnuttree_leaves.png"},
@@ -183,8 +183,8 @@ minetest.register_node("hades_chestnuttree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_chestnuttree:sapling"}, rarity = 20},
-			{items = {"hades_chestnuttree:leaves"}}
+			{items = {"chestnuttree:sapling"}, rarity = 20},
+			{items = {"chestnuttree:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -200,26 +200,26 @@ minetest.register_node("hades_chestnuttree:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_chestnuttree:wood 4",
-	recipe = {{"hades_chestnuttree:trunk"}}
+	output = "chestnuttree:wood 4",
+	recipe = {{"chestnuttree:trunk"}}
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_chestnuttree:trunk",
+	recipe = "chestnuttree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_chestnuttree:wood",
+	recipe = "chestnuttree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_chestnuttree:convert_chestnuttree_saplings_to_node_timer",
-	nodenames = {"hades_chestnuttree:sapling"},
+	name = ":chestnuttree:convert_chestnuttree_saplings_to_node_timer",
+	nodenames = {"chestnuttree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -227,8 +227,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_chestnuttree:trunk"},
-	leaves = {"hades_chestnuttree:leaves"},
+	trunks = {"chestnuttree:trunk"},
+	leaves = {"chestnuttree:leaves"},
 	radius = 3,
 })
 --]]
@@ -238,7 +238,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"chestnuttree_trunk",
-		"hades_chestnuttree:trunk",
+		"chestnuttree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"chestnuttree_wood.png"},
 		S("Chestnut Tree Stair"),
@@ -251,7 +251,7 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_chestnuttree:sapling", grow_new_chestnuttree_tree, "soil"},
+		{"chestnuttree:sapling", grow_new_chestnuttree_tree, "soil"},
 	})
 end
 
@@ -264,9 +264,9 @@ if minetest.get_modpath("doors") ~= nil then
 			inventory_image = "chestnuttree_item_wood.png",
 			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 			recipe = {
-				{"hades_chestnuttree:wood", "hades_chestnuttree:wood"},
-				{"hades_chestnuttree:wood", "hades_chestnuttree:wood"},
-				{"hades_chestnuttree:wood", "hades_chestnuttree:wood"},
+				{"chestnuttree:wood", "chestnuttree:wood"},
+				{"chestnuttree:wood", "chestnuttree:wood"},
+				{"chestnuttree:wood", "chestnuttree:wood"},
 			}
 	})
 end

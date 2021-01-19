@@ -2,7 +2,7 @@
 -- Hollytree
 --
 local modname = "hollytree"
-local modpath = minetest.get_modpath(modname)
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 -- internationalization boilerplate
@@ -68,7 +68,7 @@ end
 -- Nodes
 --
 
-minetest.register_node("hades_hollytree:sapling", {
+minetest.register_node(":hollytree:sapling", {
 	description = S("Holly Tree Sapling"),
 	drawtype = "plantlike",
 	visual_scale = 1.0,
@@ -93,7 +93,7 @@ minetest.register_node("hades_hollytree:sapling", {
 
 	on_place = function(itemstack, placer, pointed_thing)
 		itemstack = default.sapling_on_place(itemstack, placer, pointed_thing,
-			"hades_hollytree:sapling",
+			"hollytree:sapling",
 			-- minp, maxp to be checked, relative to sapling pos
 			-- minp_relative.y = 1 because sapling pos has been checked
 			{x = -2, y = 1, z = -2},
@@ -105,7 +105,7 @@ minetest.register_node("hades_hollytree:sapling", {
 	end,
 })
 
-minetest.register_node("hades_hollytree:trunk", {
+minetest.register_node(":hollytree:trunk", {
 	description = S("Holly Tree Trunk"),
 	tiles = {
 		"hollytree_trunk_top.png",
@@ -120,7 +120,7 @@ minetest.register_node("hades_hollytree:trunk", {
 })
 
 -- hollytree wood
-minetest.register_node("hades_hollytree:wood", {
+minetest.register_node(":hollytree:wood", {
 	description = S("Holly Tree Wood"),
 	tiles = {"hollytree_wood.png"},
 	paramtype2 = "facedir",
@@ -131,7 +131,7 @@ minetest.register_node("hades_hollytree:wood", {
 })
 
 -- hollytree tree leaves
-minetest.register_node("hades_hollytree:leaves", {
+minetest.register_node(":hollytree:leaves", {
 	description = S("Holly Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"hollytree_leaves.png"},
@@ -144,8 +144,8 @@ minetest.register_node("hades_hollytree:leaves", {
 	drop = {
 		max_items = 1,
 		items = {
-			{items = {"hades_hollytree:sapling"}, rarity = 20},
-			{items = {"hades_hollytree:leaves"}}
+			{items = {"hollytree:sapling"}, rarity = 20},
+			{items = {"hollytree:leaves"}}
 		}
 	},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
@@ -161,27 +161,27 @@ minetest.register_node("hades_hollytree:leaves", {
 --
 
 minetest.register_craft({
-	output = "hades_hollytree:wood 4",
-	recipe = {{"hades_hollytree:trunk"}}
+	output = "hollytree:wood 4",
+	recipe = {{"hollytree:trunk"}}
 })
 
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_hollytree:trunk",
+	recipe = "hollytree:trunk",
 	burntime = 30,
 })
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "hades_hollytree:wood",
+	recipe = "hollytree:wood",
 	burntime = 7,
 })
 
 
 minetest.register_lbm({
-	name = "hades_hollytree:convert_hollytree_saplings_to_node_timer",
-	nodenames = {"hades_hollytree:sapling"},
+	name = ":hollytree:convert_hollytree_saplings_to_node_timer",
+	nodenames = {"hollytree:sapling"},
 	action = function(pos)
 		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
@@ -189,8 +189,8 @@ minetest.register_lbm({
 
 --[[
 default.register_leafdecay({
-	trunks = {"hades_hollytree:trunk"},
-	leaves = {"hades_hollytree:leaves"},
+	trunks = {"hollytree:trunk"},
+	leaves = {"hollytree:leaves"},
 	radius = 3,
 })
 --]]
@@ -200,7 +200,7 @@ default.register_leafdecay({
 if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"hollytree_trunk",
-		"hades_hollytree:trunk",
+		"hollytree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"hollytree_wood.png"},
 		S("Cherry Tree Stair"),
@@ -215,6 +215,6 @@ end
 
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
-		{"hades_hollytree:sapling", grow_new_hollytree_tree, "soil"},
+		{"hollytree:sapling", grow_new_hollytree_tree, "soil"},
 	})
 end
