@@ -142,6 +142,30 @@ minetest.register_node(":lemontree:trunk", {
 	on_place = minetest.rotate_node,
 })
 
+if minetest.settings:get_bool("cool_trees_round_trunk", false) then
+  local box = {
+    type = "fixed",
+    fixed = {
+      {-0.5,-0.5,-3/16, 0.5,0.5,3/16},
+      {-7/16,-0.5,-5/16, 7/16,0.5,5/16},
+      {-6/16,-0.5,-6/16, 6/16,0.5,6/16},
+      {-5/16,-0.5,-7/16, 5/16,0.5,7/16},
+      {-3/16,-0.5,-0.5, 3/16,0.5,0.5},
+    },
+  };
+  minetest.override_item("lemontree:trunk",{
+    tiles = {
+      "lemontree_trunk_top_round.png",
+      "lemontree_trunk_top_round.png",
+      "lemontree_trunk.png"
+    },
+    paramtype = "light",
+    drawtype = "nodebox",
+    node_box = box,
+    selection_box = box,
+  })
+end
+
 -- lemontree wood
 minetest.register_node(":lemontree:wood", {
 	description = S("Lemon Tree Wood"),

@@ -101,6 +101,25 @@ minetest.register_node(":baldcypress:trunk", {
 	on_place = minetest.rotate_node,
 })
 
+if minetest.settings:get_bool("cool_trees_round_trunk", false) then
+  local box = {
+    type = "fixed",
+    fixed = {
+      {-0.5,-0.5,-3/16, 0.5,0.5,3/16},
+      {-7/16,-0.5,-5/16, 7/16,0.5,5/16},
+      {-6/16,-0.5,-6/16, 6/16,0.5,6/16},
+      {-5/16,-0.5,-7/16, 5/16,0.5,7/16},
+      {-3/16,-0.5,-0.5, 3/16,0.5,0.5},
+    },
+  };
+  minetest.override_item("baldcypress:trunk",{
+    paramtype = "light",
+    drawtype = "nodebox",
+    node_box = box,
+    selection_box = box,
+  })
+end
+
 -- baldcypress wood
 minetest.register_node(":baldcypress:wood", {
 	description = S("Bald Cypress Wood"),
