@@ -116,9 +116,7 @@ minetest.register_node("palm:leaves", {
 			},
 		},
 	tiles = {
-		"palm_leaves_top.png",
-		"palm_leaves_top.png",
-		"palm_leaves_top.png",
+		"palm_leaves.png",
 	},
 	paramtype = "light",
 	paramtype2 = "facedir",
