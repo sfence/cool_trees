@@ -70,7 +70,7 @@ minetest.register_node(":pineapple:pineapple", {
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
-	groups = {snappy = 3, leafdecay = 3, leaves = 1, flammable = 2},
+	groups = {snappy = 3, leafdecay = 3, leaves = 1, flammable = 2, food_pineapple = 1},
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
 	on_use = minetest.item_eat(3, "pineapple:sapling"),

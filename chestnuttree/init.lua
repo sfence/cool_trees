@@ -30,7 +30,7 @@ minetest.register_node(":chestnuttree:bur", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = ":chestnuttree:bur", param2 = 1})
+		minetest.set_node(pos, {name = "chestnuttree:bur", param2 = 1})
 	end,
 })
 
@@ -46,7 +46,7 @@ minetest.register_craftitem(":chestnuttree:fruit", {
 minetest.register_craft({
 	output = "chestnuttree:fruit",
 	recipe = {
-		{'hades_chestnuttree:bur'}
+		{'chestnuttree:bur'}
 	}
 })
 

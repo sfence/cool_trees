@@ -28,7 +28,7 @@ minetest.register_node(":clementinetree:clementine", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = ":clementinetree:clementine", param2 = 1})
+		minetest.set_node(pos, {name = "clementinetree:clementine", param2 = 1})
 	end,
 })
 

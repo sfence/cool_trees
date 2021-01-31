@@ -31,7 +31,7 @@ minetest.register_node(":lemontree:lemon", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	after_place_node = function(pos, placer, itemstack)
-		minetest.set_node(pos, {name = ":lemontree:lemon", param2 = 1})
+		minetest.set_node(pos, {name = "lemontree:lemon", param2 = 1})
 	end,
 
 	on_dig = function(pos, node, digger)
@@ -202,7 +202,7 @@ minetest.register_node(":lemontree:leaves", {
 		pos.y = pos.y - 1
 		local node = minetest.get_node_or_nil(pos)
 		if node and node.name == "air" then
-			minetest.set_node(pos, {name = ":lemontree:lemon"})
+			minetest.set_node(pos, {name = "lemontree:lemon"})
 			return false
 		else
 			return true
