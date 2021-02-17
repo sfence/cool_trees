@@ -119,8 +119,6 @@ minetest.register_node("ebony:leaves", {
 	description = S("Ebony Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"ebony_leaves.png"},
-	inventory_image = "ebony_leaves.png",
-	wield_image = "ebony_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

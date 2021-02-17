@@ -117,8 +117,6 @@ minetest.register_node("larch:leaves", {
 	description = S("Larch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"larch_leaves.png"},
-	inventory_image = "larch_leaves.png",
-	wield_image = "larch_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
