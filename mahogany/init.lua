@@ -119,8 +119,6 @@ minetest.register_node("mahogany:leaves", {
 	description = S("Mahogany Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"mahogany_leaves.png"},
-	inventory_image = "mahogany_leaves.png",
-	wield_image = "mahogany_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

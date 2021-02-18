@@ -153,8 +153,6 @@ minetest.register_node("oak:leaves", {
 	description = S("Oak Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"oak_leaves.png"},
-	inventory_image = "oak_leaves.png",
-	wield_image = "oak_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
