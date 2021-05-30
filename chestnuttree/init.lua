@@ -244,6 +244,16 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
+-- stairsplus/moreblocks
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("chestnuttree", "wood", "chestnuttree:wood", {
+		description = "Chestnut Tree",
+		tiles = {"chestnuttree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = default.node_sound_wood_defaults(),
+	})
+end
+
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"chestnuttree:sapling", grow_new_chestnuttree_tree, "soil"},
