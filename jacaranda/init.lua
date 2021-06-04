@@ -187,6 +187,16 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
+-- stairsplus/moreblocks
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("jacaranda", "wood", "jacaranda:wood", {
+		description = "Jacaranda Tree",
+		tiles = {"jacaranda_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = default.node_sound_wood_defaults(),
+	})
+end
+
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"jacaranda:sapling", grow_new_jacaranda_tree, "soil"},

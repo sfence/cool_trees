@@ -200,10 +200,20 @@ if minetest.get_modpath("stairs") ~= nil then
 		"hollytree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"hollytree_wood.png"},
-		S("Cherry Tree Stair"),
-		S("Cherry Tree Slab"),
+		S("Holly Tree Stair"),
+		S("Holly Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("hollytree", "wood", "hollytree:wood", {
+		description = "Holly Tree",
+		tiles = {"hollytree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = default.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal
