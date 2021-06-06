@@ -214,11 +214,11 @@ if minetest.settings:get_bool("cool_fences", true) then
 		sounds = default.node_sound_wood_defaults(),
 	}
 	default.register_fence("pomegranate:fence", table.copy(fence)) 
-	fence.description = S("Pomegranate Tree Fence Rail"),
+	fence.description = S("Pomegranate Tree Fence Rail")
 	default.register_fence_rail("pomegranate:fence_rail", table.copy(fence))
 	
 	if minetest.get_modpath("doors") ~= nil then
-		fence.description = S("Pomegranate Tree Fence Gate"),
+		fence.description = S("Pomegranate Tree Fence Gate")
 		doors.register_fencegate("pomegranate:gate", table.copy(fence))
 	end
 end
