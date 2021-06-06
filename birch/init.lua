@@ -104,6 +104,7 @@ else
 end
 
 minetest.register_decoration({
+	name = "birch:birch_tree",
 	deco_type = "schematic",
 	place_on = {place_on},
 	sidelen = 16,
@@ -211,8 +212,6 @@ minetest.register_node(":birch:leaves", {
 	description = S("Birch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"birch_leaves.png"},
-	inventory_image = "birch_leaves.png",
-	wield_image = "birch_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -284,6 +283,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Birch Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("birch", "wood", "birch:wood", {
+		description = "Birch",
+		tiles = {"birch_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

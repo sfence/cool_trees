@@ -50,6 +50,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+	name = "pomegranate:pomegranate_tree",
 		deco_type = "schematic",
 		place_on = {"default:dry_dirt"},
 		sidelen = 16,
@@ -156,8 +157,6 @@ minetest.register_node(":pomegranate:leaves", {
 	description = S("Pomegranate Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"pomegranate_leaves.png"},
-	inventory_image = "pomegranate_leaves.png",
-	wield_image = "pomegranate_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -240,6 +239,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Pomegranate Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("pomegranate", "wood", "pomegranate:wood", {
+		description = "Pomegranate Tree",
+		tiles = {"pomegranate_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

@@ -27,6 +27,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "ebony:ebony_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_rainforest_litter"},
 		sidelen = 16,
@@ -138,8 +139,6 @@ minetest.register_node(":ebony:leaves", {
 	description = S("Ebony Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"ebony_leaves.png"},
-	inventory_image = "ebony_leaves.png",
-	wield_image = "ebony_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -300,6 +299,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Ebony Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("ebony", "wood", "ebony:wood", {
+		description = "Ebony",
+		tiles = {"ebony_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

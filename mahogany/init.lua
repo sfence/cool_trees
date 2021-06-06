@@ -28,6 +28,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "mahogany:mahogany_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_rainforest_litter"},
 		sidelen = 16,
@@ -138,8 +139,6 @@ minetest.register_node(":mahogany:leaves", {
 	description = S("Mahogany Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"mahogany_leaves.png"},
-	inventory_image = "mahogany_leaves.png",
-	wield_image = "mahogany_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -275,6 +274,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Mahogany Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("mahogany", "wood", "mahogany:wood", {
+		description = "Mahogany",
+		tiles = {"mahogany_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

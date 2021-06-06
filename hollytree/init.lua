@@ -44,6 +44,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	end
 
 	minetest.register_decoration({
+		name = "hollytree:holly_tree",
 		deco_type = "schematic",
 		place_on = {place_on},
 		sidelen = 16,
@@ -154,8 +155,6 @@ minetest.register_node(":hollytree:leaves", {
 	description = S("Holly Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"hollytree_leaves.png"},
-	inventory_image = "hollytree_leaves.png",
-	wield_image = "hollytree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -222,12 +221,22 @@ if minetest.get_modpath("stairs") ~= nil then
 		"hollytree:trunk",
 		{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		{"hollytree_wood.png"},
-		S("Cherry Tree Stair"),
-		S("Outer Cherry Tree Stair"),
-		S("Inner Cherry Tree Stair"),
-		S("Cherry Tree Slab"),
+		S("Holly Tree Stair"),
+		S("Outer Holly Tree Stair"),
+		S("Inner Holly Tree Stair"),
+		S("Holly Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("hollytree", "wood", "hollytree:wood", {
+		description = "Holly Tree",
+		tiles = {"hollytree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

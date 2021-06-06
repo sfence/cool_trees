@@ -26,6 +26,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "jacaranda:jacaranda_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_rainforest_litter"},
 		sidelen = 16,
@@ -135,8 +136,6 @@ minetest.register_node(":jacaranda:blossom_leaves", {
 	description = S("Jacaranda Blossom Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"jacaranda_blossom_leaves.png"},
-	inventory_image = "jacaranda_blossom_leaves.png",
-	wield_image = "jacaranda_blossom_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -209,6 +208,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Jacaranda Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("jacaranda", "wood", "jacaranda:wood", {
+		description = "Jacaranda Tree",
+		tiles = {"jacaranda_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

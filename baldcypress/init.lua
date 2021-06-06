@@ -25,6 +25,7 @@ end
 --
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
+	name = "baldcypress:baldcypress_tree",
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"default:sand"},
@@ -136,8 +137,6 @@ minetest.register_node(":baldcypress:leaves", {
 	description = S("Bald Cypress Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"baldcypress_leaves.png"},
-	inventory_image = "baldcypress_leaves.png",
-	wield_image = "baldcypress_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -251,6 +250,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Bald Cypress Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("baldcypress", "wood", "baldcypress:wood", {
+		description = "Bald Cypress",
+		tiles = {"baldcypress_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

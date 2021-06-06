@@ -88,6 +88,7 @@ if minetest.get_modpath("rainf") then
 	end
 
 	minetest.register_decoration({
+		name = "plumtree:plum_tree",
 		deco_type = "schematic",
 		place_on = {place_on},
 		sidelen = 16,
@@ -198,8 +199,6 @@ minetest.register_node(":plumtree:leaves", {
 	description = S("Plumtree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"plumtree_leaves.png"},
-	inventory_image = "plumtree_leaves.png",
-	wield_image = "plumtree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -272,6 +271,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Plum Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("plumtree", "wood", "plumtree:wood", {
+		description = "Plum Tree",
+		tiles = {"plumtree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

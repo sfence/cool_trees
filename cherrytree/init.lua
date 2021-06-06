@@ -70,6 +70,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "cherrytree:cherry_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_grass"},
 		sidelen = 16,
@@ -179,8 +180,6 @@ minetest.register_node(":cherrytree:blossom_leaves", {
 	description = S("Cherrytree Blossom Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"cherrytree_blossom_leaves.png"},
-	inventory_image = "cherrytree_blossom_leaves.png",
-	wield_image = "cherrytree_blossom_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -212,8 +211,6 @@ minetest.register_node(":cherrytree:leaves", {
 	description = S("Cherrytree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"cherrytree_leaves.png"},
-	inventory_image = "cherrytree_leaves.png",
-	wield_image = "cherrytree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -286,6 +283,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Cherry Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("cherrytree", "wood", "cherrytree:wood", {
+		description = "Cherry Tree",
+		tiles = {"cherrytree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

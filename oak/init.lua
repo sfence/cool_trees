@@ -65,6 +65,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	end
 
 	minetest.register_decoration({
+		name = "oak:oak_tree",
 		deco_type = "schematic",
 		place_on = {place_on},
 		sidelen = 16,
@@ -109,7 +110,7 @@ minetest.register_node(":oak:sapling", {
 	sounds = hades_sounds.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1,1))
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -172,8 +173,6 @@ minetest.register_node(":oak:leaves", {
 	description = S("Oak Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"oak_leaves.png"},
-	inventory_image = "oak_leaves.png",
-	wield_image = "oak_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -219,7 +218,7 @@ minetest.register_lbm({
 	name = ":oak:convert_oak_saplings_to_node_timer",
 	nodenames = {"oak:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 
@@ -245,6 +244,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Oak Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("oak", "wood", "oak:wood", {
+		description = "Oak",
+		tiles = {"oak_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

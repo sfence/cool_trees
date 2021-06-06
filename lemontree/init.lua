@@ -69,6 +69,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "lemontree:lemon_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_grass"},
 		sidelen = 16,
@@ -182,8 +183,6 @@ minetest.register_node(":lemontree:leaves", {
 	description = S("Lemon Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"lemontree_leaves.png"},
-	inventory_image = "lemontree_leaves.png",
-	wield_image = "lemontree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -265,6 +264,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Lemon Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("lemontree", "wood", "lemontree:wood", {
+		description = "Lemon Tree",
+		tiles = {"lemontree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

@@ -1,142 +1,20 @@
---
 -- Palm Tree
 --
 
 -- internationalization boilerplate
-local S = minetest.get_translator(minetest.get_current_modname())
+local S = minetest.get_translator("palm")
 
-palm = {}
-
-local ai = {name = "air", param1 = 000}
-local tr = {name = "palm:trunk", param1 = 255}
-local tf = {name = "palm:trunk", param1 = 255, force_place = true}
-local lp = {name = "palm:leaves", param1 = 255}
-local cn = {name = "palm:coconut", param1 = 255}
-
-palm.palmtree = {
-
-	size = {y = 9, x = 9, z = 9},
-
-	data = {
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, cn, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, tf, ai, ai, ai, ai,
-		ai, ai, ai, ai, tf, ai, ai, ai, ai,
-		ai, ai, ai, ai, tr, ai, ai, ai, ai,
-		ai, ai, ai, ai, tr, tr, ai, ai, ai,
-		ai, ai, ai, ai, ai, tr, ai, ai, ai,
-		ai, ai, lp, ai, ai, tr, ai, ai, lp,
-		ai, ai, lp, lp, cn, tr, cn, lp, lp,
-		ai, ai, ai, lp, lp, lp, lp, lp, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, cn, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, lp, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-		ai, ai, ai, ai, ai, ai, ai, ai, ai,
-	}
-}
-
-local function can_grow(pos)
-	local node_under = minetest.get_node_or_nil({x = pos.x, y = pos.y - 1, z = pos.z})
-	if not node_under then
-		return false
-	end
-	local name_under = node_under.name
-	local is_soil = minetest.get_item_group(name_under, "sand")
-	if is_soil == 0 then
-		return false
-	end
-	local light_level = minetest.get_node_light(pos)
-	if not light_level or light_level < 13 then
-		return false
-	end
-	return true
-end
-
+local modname = "palm"
+local modpath = minetest.get_modpath(minetest.get_current_modname())
 
 local function grow_new_palm_tree(pos)
-	if not can_grow(pos) then
+	if not default.can_grow(pos) then
 		-- try a bit later again
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
 	minetest.remove_node(pos)
-	minetest.place_schematic({x = pos.x - 4, y = pos.y, z = pos.z - 4},
-		palm.palmtree, "0", nil, false)
+	minetest.place_schematic({x = pos.x-5, y = pos.y, z = pos.z-3}, modpath.."/schematics/palmtree.mts", "0", nil, false)
 end
 
 --
@@ -144,6 +22,7 @@ end
 --
 
 minetest.register_decoration({
+	name = "palm:palm_tree",
 	deco_type = "schematic",
 	place_on = {"default:sand"},
 		sidelen = 16,
@@ -158,7 +37,7 @@ minetest.register_decoration({
 	biomes = {"sandstone_desert_ocean", "desert_ocean"},
 	y_min = 1,
 	y_max = 2,
-	schematic = palm.palmtree,
+	schematic = modpath.."/schematics/palmtree.mts",
 	flags = "place_center_x, place_center_z",
 	rotation = "random",
 })
@@ -249,11 +128,18 @@ minetest.register_node(":palm:wood", {
 -- palm tree leaves
 minetest.register_node(":palm:leaves", {
 	description = S("Palm Leaves"),
-	drawtype = "allfaces_optional",
-	tiles = {"palm_leaves.png"},
-	inventory_image = "palm_leaves.png",
-	wield_image = "palm_leaves.png",
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+				{-0.5, -0.4375, -0.5, 0.5, -0.5, 0.5},
+			},
+		},
+	tiles = {
+		"palm_leaves.png",
+	},
 	paramtype = "light",
+	paramtype2 = "facedir",
 	walkable = true,
 	waving = 1,
 	groups = {snappy = 3, leafdecay = 3, leaves = 1, flammable = 2},
@@ -432,6 +318,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Palm Tree Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("palm", "wood", "palm:wood", {
+		description = "Palm",
+		tiles = {"palm_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then

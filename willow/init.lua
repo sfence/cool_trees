@@ -27,6 +27,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "willow:willow_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt"},
 		sidelen = 16,
@@ -137,8 +138,6 @@ minetest.register_node(":willow:leaves", {
 	description = S("Willow Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"willow_leaves.png"},
-	inventory_image = "willow_leaves.png",
-	wield_image = "willow_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -210,6 +209,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Willow Slab"),
 		hades_sounds.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("hades_moreblocks") then
+	stairsplus:register_all("willow", "wood", "willow:wood", {
+		description = "Willow",
+		tiles = {"willow_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	})
 end
 
 if minetest.get_modpath("bonemeal") ~= nil then
