@@ -250,6 +250,25 @@ if minetest.get_modpath("bonemeal") ~= nil then
 	})
 end
 
+-- Fence
+if minetest.get_modpath("hades_fences") ~= nil then
+	local fence = {
+		description = S("Bamboo Wood Fence"),
+		texture =  "bamboo_floor.png",
+		material = "hades_bamboo:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	}
+	hades_fences.register_fence("hades_bamboo:fence", table.copy(fence)) 
+	fence.description = S("Bamboo Fence Rail")
+	--hades_fences.register_fence_rail("hades_bamboo:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Bamboo Fence Gate")
+		doors.register_fencegate("hades_bamboo:gate", table.copy(fence))
+	end
+end
+
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then

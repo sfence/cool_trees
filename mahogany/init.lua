@@ -6,7 +6,6 @@ local modname = "mahogany"
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
-
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -259,6 +258,25 @@ default.register_leafdecay({
 	radius = 3,
 })
 --]]
+
+-- Fence
+if minetest.get_modpath("hades_fences") ~= nil then
+	local fence = {
+		description = S("Mahogany Wood Fence"),
+		texture =  "mahogany_wood.png",
+		material = "hades_mahogany:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	}
+	hades_fences.register_fence("hades_mahogany:fence", table.copy(fence)) 
+	fence.description = S("Mahogany Fence Rail")
+	--hades_fences.register_fence_rail("hades_mahogany:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Mahogany Fence Gate")
+		doors.register_fencegate("hades_mahogany:gate", table.copy(fence))
+	end
+end
 
 --Stairs
 

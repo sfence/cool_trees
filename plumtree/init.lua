@@ -257,6 +257,25 @@ default.register_leafdecay({
 })
 --]]
 
+-- Fence
+if minetest.get_modpath("hades_fences") ~= nil then
+	local fence = {
+		description = S("Plum Tree Wood Fence"),
+		texture =  "plumtree_wood.png",
+		material = "hades_plumtree:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	}
+	hades_fences.register_fence("hades_plumtree:fence", table.copy(fence)) 
+	fence.description = S("Plum Tree Fence Rail")
+	--hades_fences.register_fence_rail("hades_plumtree:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Plum Tree Fence Gate")
+		doors.register_fencegate("hades_plumtree:gate", table.copy(fence))
+	end
+end
+
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then

@@ -236,6 +236,25 @@ default.register_leafdecay({
 })
 --]]
 
+-- Fence
+if minetest.get_modpath("hades_fences") ~= nil then
+	local fence = {
+		description = S("Bald Cypress Wood Fence"),
+		texture =  "baldcypress_wood.png",
+		material = "hades_baldcypress:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = hades_sounds.node_sound_wood_defaults(),
+	}
+	hades_fences.register_fence("hades_baldcypress:fence", table.copy(fence)) 
+	fence.description = S("Bald Cypress Fence Rail")
+	--hades_fences.register_fence_rail("hades_baldcypress:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Bald Cypress Fence Gate")
+		doors.register_fencegate("hades_baldcypress:gate", table.copy(fence))
+	end
+end
+
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
